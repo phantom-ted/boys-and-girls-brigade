@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4338ca">
+<title>Boys and Girls Brigade 2026</title>
+<style>
+  *{box-sizing:border-box;-webkit-text-size-adjust:100%}
+  body{margin:0;padding:24px 16px;background:#f4f5f7;color:#111827;font-size:14px;line-height:1.5;
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .app{max-width:1240px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;overflow:hidden}
+  .hd{padding:18px 22px;border-bottom:1px solid #eef0f3;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+  .hd h1{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em}
+  .hd .sub{font-size:12px;color:#8b93a1;margin-top:3px}
+  .badge{font-size:11px;padding:4px 10px;border-radius:20px;background:#eef2ff;color:#4338ca;font-weight:600}
+  .nav{display:flex;gap:4px;padding:9px 14px;border-bottom:1px solid #eef0f3;background:#fbfbfc;flex-wrap:wrap}
+  .nav button{border:0;background:transparent;padding:8px 14px;border-radius:9px;font-size:13px;font-weight:600;color:#5b6473;cursor:pointer;font-family:inherit}
+  .nav button:hover{background:#f1f2f5;color:#111827}
+  .nav button.on{background:#4338ca;color:#fff}
+  .main{padding:20px 22px 26px}
+  .view{display:none}
+  .view.on{display:block}
+  h2{font-size:13px;font-weight:600;margin:0 0 12px;color:#374151}
+  .grid{display:grid;gap:12px}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:#fbfbfc;border:1px solid #eef0f3;border-radius:12px;padding:14px 16px}
+  .dashboard-card,.report-date-card{text-align:left;width:100%;font:inherit;color:inherit;cursor:pointer}
+  .dashboard-card:hover,.report-date-card:hover{border-color:#c7d2fe;background:#f8f9ff}
+  .dashboard-card:focus-visible,.report-date-card:focus-visible{outline:2px solid #4338ca;outline-offset:2px}
+  .card .lbl{font-size:11px;color:#8b93a1;margin-bottom:5px;font-weight:600}
+  .card .val{font-size:24px;font-weight:600;color:#111827;letter-spacing:-.03em}
+  .card .val.gold{color:#b45309}
+  .card .val.blue{color:#4338ca}
+  .card .val.pink{color:#be185d}
+  .card .val.teal{color:#0f766e}
+  dialog{border:1px solid #e5e7eb;border-radius:12px;padding:20px;width:min(360px,calc(100% - 32px));box-shadow:0 20px 50px rgba(17,24,39,.2)}
+  dialog::backdrop{background:rgba(17,24,39,.4)}
+  label{display:block;font-size:11.5px;color:#5b6473;margin-bottom:5px;font-weight:600}
+  input,select{width:100%;padding:9px 11px;border:1px solid #dfe2e8;border-radius:9px;font-size:13px;font-family:inherit;background:#fff;color:#111827}
+  input:focus,select:focus{outline:0;border-color:#4338ca;box-shadow:0 0 0 3px rgba(67,56,202,.09)}
+  .field{margin-bottom:13px}
+  .btn{border:0;background:#4338ca;color:#fff;padding:9px 17px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+  .btn:hover{background:#3730a3}
+  .btn.sec{background:#f3f4f6;color:#374151;border:1px solid #e5e7eb}
+  .btn.sec:hover{background:#e9eaee}
+  .btn.dng{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+  .btn.dng:hover{background:#fee2e2}
+  .btn.sm{padding:5px 11px;font-size:12px;border-radius:7px}
+  .row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .seg{display:flex;gap:4px;background:#f3f4f6;padding:4px;border-radius:10px}
+  .seg button{border:0;background:transparent;padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:600;color:#5b6473;cursor:pointer;font-family:inherit}
+  .seg button.on{background:#fff;color:#111827;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .tbl-scroll{overflow-x:auto;border:1px solid #eef0f3;border-radius:12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-size:11px;color:#8b93a1;font-weight:600;padding:10px;border-bottom:1px solid #eef0f3;background:#fbfbfc;white-space:nowrap}
+  td{padding:6px 8px;border-bottom:1px solid #f5f6f8;vertical-align:middle}
+  tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:#fcfcfd}
+  .muted{color:#8b93a1}
+  .panel{border:1px solid #eef0f3;border-radius:12px;padding:18px;margin-bottom:16px;background:#fbfbfc}
+  .empty{text-align:center;padding:28px 10px;color:#a3aab6;font-size:12.5px}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 8px;border-radius:20px;font-weight:600;margin-top:3px}
+  .tag.b{background:#eef2ff;color:#3730a3}
+  .tag.g{background:#fdf2f8;color:#9d174d}
+  .nm{font-weight:600;white-space:nowrap}
+  .cell{border:1px solid transparent;background:transparent;padding:6px 8px;border-radius:7px;font-size:12.5px;min-width:120px}
+  .cell:hover{border-color:#e5e7eb;background:#fff}
+  .cell:focus{border-color:#4338ca;background:#fff;outline:0}
+  .cell.lv{min-width:80px}
+  .cell.ag{min-width:58px;width:58px;text-align:center}
+  .agepill{display:inline-block;min-width:34px;text-align:center;font-size:12.5px;font-weight:600;color:#0f766e;background:#f0fdfa;border-radius:7px;padding:4px 8px}
+  .chartbox{position:relative;width:100%}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111827;color:#fff;padding:10px 18px;border-radius:22px;font-size:12.5px;font-weight:500;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none}
+  .toast.on{opacity:1}
+  .sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px;flex-wrap:wrap}
+  .tot-row td{font-weight:600;background:#fbfbfc}
+  .amt{width:115px;min-width:0}
+  .hint{font-size:11.5px;color:#a3aab6;margin:-4px 0 12px}
+  .yt th,.yt td{padding:5px 4px;text-align:center;font-size:12px}
+  .yt th.name,.yt td.name{text-align:left;padding-left:10px;white-space:nowrap;min-width:170px}
+  .yt input{border:1px solid transparent;background:transparent;padding:5px 3px;border-radius:6px;font-size:12px;text-align:center;width:66px}
+  .yt input:hover{border-color:#e5e7eb;background:#fff}
+  .yt input:focus{border-color:#4338ca;background:#fff;outline:0}
+  .yt .rowtotal{font-weight:600;color:#b45309;white-space:nowrap}
+  .yt .mtot{background:#fbfbfc;font-weight:600;font-size:11.5px}
+  #printArea{display:none}
+  #printArea table{width:100%;border-collapse:collapse;font-size:12px}
+  #printArea th,#printArea td{border:1px solid #ccc;padding:5px;text-align:left}
+  html.auth-locked .app{display:none}
+  .auth-screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:20px}
+  html.auth-locked .auth-screen{display:flex}
+  .auth-card{width:min(380px,100%);background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:24px;box-shadow:0 12px 35px rgba(17,24,39,.1)}
+  .auth-card h1{margin:0 0 6px;font-size:20px}
+  .auth-card p{margin:0 0 18px;color:#5b6473;font-size:13px}
+  .auth-error{min-height:20px;margin:8px 0;color:#b91c1c;font-size:12px}
+  .auth-warning{margin-top:16px!important;font-size:11px!important}
+  html.auth-locked #printArea,html.auth-locked .toast{display:none}
+
+  @media print{
+    body{padding:0;background:#fff}
+    .app,.toast{display:none}
+    #printArea{display:block}
+  }
+
+  @media(max-width:900px){.g5{grid-template-columns:repeat(3,1fr)}}
+
+  @media(max-width:760px){
+    body{padding:0;background:#fff}
+    .app{border:0;border-radius:0;max-width:100%}
+    .hd{padding:14px 16px}
+    .hd h1{font-size:16px}
+    .nav{padding:8px;gap:2px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .nav button{white-space:nowrap;padding:8px 12px;font-size:12.5px}
+    .main{padding:14px 14px 30px}
+    .g5{grid-template-columns:repeat(2,1fr)}
+    .g3{grid-template-columns:1fr}
+    .card{padding:12px}
+    .card .val{font-size:20px}
+    input,select{font-size:16px}
+    .btn{padding:10px 16px}
+    .btn.sm{padding:7px 12px;font-size:12px}
+
+    .tbl-scroll{overflow:visible;border:0;border-radius:0}
+    .tbl-scroll.keepscroll{overflow-x:auto;border:1px solid #eef0f3;border-radius:12px}
+
+    .rt{display:block}
+    .rt thead{display:none}
+    .rt tbody{display:block}
+    .rt tr{display:block;border:1px solid #eef0f3;border-radius:12px;padding:12px;margin-bottom:10px;background:#fff}
+    .rt tr:hover{background:#fff}
+    .rt td{display:flex;align-items:center;gap:10px;border:0;padding:5px 0;width:100%}
+    .rt td::before{content:attr(data-l);flex:0 0 92px;font-size:11.5px;color:#8b93a1;font-weight:600}
+    .rt td.namecell{display:block;padding:0 0 9px;margin-bottom:7px;border-bottom:1px solid #f5f6f8}
+    .rt td.namecell::before{display:none}
+    .rt td.namecell .nm{font-size:15px}
+    .rt td.actcell{display:flex;justify-content:flex-end;gap:8px;padding-top:11px;margin-top:4px;border-top:1px solid #f5f6f8}
+    .rt td.actcell::before{display:none}
+    .rt .cell{flex:1;min-width:0;border-color:#eef0f3;background:#fbfbfc;font-size:16px;padding:8px 10px}
+    .rt .amt{flex:1;width:auto}
+    .rt tr.tot-row{background:#fbfbfc}
+    .rt tr.tot-row td{justify-content:space-between}
+    .rt tr.tot-row td::before{display:none}
+
+    .yt th.name,.yt td.name{position:sticky;left:0;background:#fff;z-index:2;box-shadow:1px 0 0 #eef0f3;min-width:130px}
+    .yt thead th.name{background:#fbfbfc}
+    .yt input{width:56px;font-size:13px}
+    .yt th,.yt td{padding:4px 2px}
+
+    .sec-hd{gap:8px}
+    .sec-hd h2{width:100%}
+    .hint{font-size:11px}
+  }
+</style>
+<script>document.documentElement.classList.add('auth-locked');</script>
+</head>
+<body>
+
+<section class="auth-screen" aria-labelledby="auth-title">
+  <form class="auth-card" id="auth-form">
+    <h1 id="auth-title">Protect this register</h1>
+    <p id="auth-description">Set a passcode to restrict casual access on this browser.</p>
+    <div class="field">
+      <label for="auth-passcode">Passcode</label>
+      <input id="auth-passcode" type="password" autocomplete="new-password" minlength="8" required>
+    </div>
+    <div class="field" id="auth-confirm-field">
+      <label for="auth-confirm">Confirm passcode</label>
+      <input id="auth-confirm" type="password" autocomplete="new-password" minlength="8" required>
+    </div>
+    <div class="auth-error" id="auth-error" role="alert"></div>
+    <button class="btn" id="auth-submit" type="submit">Set passcode</button>
+    <p class="auth-warning">This browser-only passcode is not a firewall or strong security. Data remains readable in browser storage and the HTML file.</p>
+  </form>
+</section>
+
+<div class="app">
+  <div class="hd">
+    <div>
+      <h1 id="org">Boys and Girls Brigade 2026</h1>
+      <div class="sub">Members register &amp; monthly offerings</div>
+    </div>
+    <div class="row">
+      <span class="badge" id="count">0 members</span>
+      <select id="currency" style="width:auto;padding:7px 10px;font-size:12px">
+        <option value="KSh">KSh</option>
+        <option value="$">USD</option>
+        <option value="£">GBP</option>
+        <option value="€">EUR</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button data-v="dash" class="on">Dashboard</button>
+    <button data-v="students">Members</button>
+    <button data-v="offerings">Offerings</button>
+    <button data-v="reports">Reports</button>
+    <button data-v="data">Backup</button>
+  </div>
+
+  <div class="main">
+    <div class="view on" id="v-dash">
+      <div class="grid g5">
+        <button type="button" class="card dashboard-card" data-dashboard="members"><div class="lbl">Total members</div><div class="val" id="s-total">0</div></button>
+        <button type="button" class="card dashboard-card" data-dashboard="boys"><div class="lbl">Boys</div><div class="val blue" id="s-boys">0</div></button>
+        <button type="button" class="card dashboard-card" data-dashboard="girls"><div class="lbl">Girls</div><div class="val pink" id="s-girls">0</div></button>
+        <button type="button" class="card dashboard-card" data-dashboard="members"><div class="lbl">Average age</div><div class="val teal" id="s-age">—</div></button>
+        <button type="button" class="card dashboard-card" data-dashboard="offerings"><div class="lbl">This month's offering</div><div class="val gold" id="s-month">0</div></button>
+      </div>
+    </div>
+
+    <div class="view" id="v-students">
+      <div class="sec-hd">
+        <h2 style="margin:0">Members</h2>
+        <button class="btn" id="btn-add">+ Add member</button>
+      </div>
+
+      <div class="panel" id="form-panel" style="display:none">
+        <h2 id="form-title">Add member</h2>
+        <input type="hidden" id="f-id">
+        <div class="grid g3">
+          <div class="field"><label>Full name</label><input id="f-name" placeholder="Name"></div>
+          <div class="field"><label>Gender</label><select id="f-gender"><option value="">—</option><option>Boy</option><option>Girl</option></select></div>
+          <div class="field"><label>Date of birth</label><input id="f-dob" placeholder="dd-mm-yyyy"></div>
+          <div class="field"><label>Age (if D.O.B unknown)</label><input id="f-age" type="number" min="1" max="30" placeholder="Years"></div>
+          <div class="field"><label>Contact</label><input id="f-contact" placeholder="07xx xxx xxx"></div>
+          <div class="field"><label>School</label><input id="f-school" placeholder="School name"></div>
+          <div class="field"><label>Level / class</label><input id="f-level" placeholder="e.g. Grade 6"></div>
+          <div class="field"><label>Current location</label><input id="f-location" placeholder="Area"></div>
+        </div>
+        <div class="row">
+          <button class="btn" id="btn-save">Save</button>
+          <button class="btn sec" id="btn-cancel">Cancel</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-bottom:12px">
+        <div class="seg" id="seg">
+          <button data-g="" class="on">All</button>
+          <button data-g="Boy">Boys</button>
+          <button data-g="Girl">Girls</button>
+        </div>
+        <input id="f-search" placeholder="Search name, school or location" style="flex:1;min-width:180px">
+      </div>
+      <div class="hint">Age fills itself in from the date of birth. Where there is no D.O.B, type the age in the box. School and location save as you type.</div>
+      <div class="tbl-scroll" id="tbl-students"></div>
+    </div>
+
+    <div class="view" id="v-offerings">
+      <div class="sec-hd">
+        <h2 style="margin:0">Offerings</h2>
+        <div class="row">
+          <div class="seg" id="oseg">
+            <button data-m="month" class="on">One month</button>
+            <button data-m="year">Whole year</button>
+          </div>
+          <input type="month" id="o-month" style="width:auto">
+          <input type="number" id="o-year" min="2000" max="2100" style="width:100px;display:none">
+        </div>
+      </div>
+      <div class="row" style="margin-bottom:12px">
+        <input id="o-search" placeholder="Search member" style="max-width:280px">
+      </div>
+
+      <div id="mode-month">
+        <div class="hint">Type each member's total offering for the month. It saves automatically.</div>
+        <div class="tbl-scroll" id="tbl-offerings"></div>
+      </div>
+
+      <div id="mode-year" style="display:none">
+        <div class="hint">Every member's giving for the whole year. Swipe sideways for the months — names stay pinned on the left.</div>
+        <div class="tbl-scroll keepscroll" id="tbl-year"></div>
+      </div>
+    </div>
+
+    <div class="view" id="v-reports">
+      <div class="sec-hd">
+        <h2 style="margin:0">Reports</h2>
+        <button class="btn sec sm" id="btn-print">Print register</button>
+      </div>
+      <div class="grid g3" style="margin-bottom:18px">
+        <button type="button" class="card report-date-card" data-report-date><div class="lbl">Total raised in <span id="r-year-label">this year</span></div><div class="val gold" id="r-year">0</div></button>
+        <div class="card"><div class="lbl">Total offering in <span id="r-month-label">selected month</span></div><div class="val" id="r-month-total">0</div></div>
+        <button type="button" class="card report-date-card" data-report-date><div class="lbl">Months recorded in <span id="r-months-year"></span></div><div class="val" id="r-months">0</div></button>
+      </div>
+      <h2>Offerings by month</h2>
+      <div class="chartbox" style="height:250px"><canvas id="chart-month"></canvas></div>
+      <h2 style="margin-top:24px">Top giving members</h2>
+      <div id="r-top"></div>
+    </div>
+
+    <dialog id="report-date-dialog">
+      <form id="report-date-form">
+        <h2>Choose report month and year</h2>
+        <div class="field"><label for="report-month">Month and year</label><input type="month" id="report-month" required></div>
+        <div class="row">
+          <button type="button" class="btn sec" id="report-date-cancel">Cancel</button>
+          <button type="submit" class="btn">Show report</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="view" id="v-data">
+      <h2>Backup &amp; restore</h2>
+      <p class="muted" style="font-size:13px;margin:0 0 14px">Everything is saved in this browser. Download a backup so nothing is lost, and restore it on another device.</p>
+      <div class="row" style="margin-bottom:22px">
+        <button class="btn" id="btn-export">Download backup</button>
+        <button class="btn sec" id="btn-import">Restore from backup</button>
+        <input type="file" id="file-import" accept=".json" style="display:none">
+      </div>
+      <h2>Group name</h2>
+      <div class="row" style="margin-bottom:22px">
+        <input id="f-org" placeholder="Boys and Girls Brigade 2026" style="max-width:320px">
+        <button class="btn sec sm" id="btn-org">Save</button>
+      </div>
+      <h2>Clear everything</h2>
+      <button class="btn dng" id="btn-clear">Erase all data</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="printArea"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+(function(){
+  var KEY = 'brigade_2026';
+  var AUTH_KEY = 'brigade_2026_auth';
+  var AUTH_ITERATIONS = 150000;
+  var MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
+  var MNAME = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  var roster = [
+    'Abraham Owiti|Boy||',
+    'Alvin Kariuki Karanja|Boy|16-08-2009|0725886740',
+    'Alvin Maina|Boy||',
+    'Alvin Nga’nga Kamiru|Boy||',
+    'Alvis Kingstone Karigitho|Boy||',
+    'Anthony Njoroge|Boy||',
+    'Benson Kamere Gitau|Boy|06-04-2012|0712488085',
+    'Brian Mwaura Muigai|Boy||',
+    'Brighton Warutere Mwangi|Boy|30-09-2013|0720759749',
+    'Bryden Junior Wainaina|Boy|07-09-2013|0722377744',
+    'Covenant Wesley Kamau|Boy|03-08-2009|0729833180',
+    'Daniel Mbugua Njoroge|Boy|10-03-2010|0718500185',
+    'Douglas Githiaka Njoroge|Boy||',
+    'Edmond Wanaswa Kinene|Boy|25-12-2011|0721436790',
+    'Elton Kamau Maina|Boy||',
+    'Elvis Kariuki|Boy||',
+    'Emmanuel Macharia Wahome|Boy|09-11-2011|0727739885',
+    'Fabian Wambiri Maina|Boy||',
+    'Franklin Mariga|Boy||',
+    'Frankline Mwangi|Boy||',
+    'Galvin Ndegwa|Boy||',
+    'George Muiruri|Boy||',
+    'Gift Isigi Muhonja|Boy||',
+    'Harvey Kamau Kamiru|Boy||',
+    'Ian Kamau Kariuki|Boy|19-12-2012|0723142429',
+    'Ian Kamau Wangare|Boy||',
+    'Ian Ngige|Boy||',
+    'Ian Njoroge Kamanda|Boy||',
+    'Israel Gichohi|Boy||',
+    'Izrael Gerald Mahugu|Boy||',
+    'James Ndungu|Boy||',
+    'James Ndungu Gikuhi|Boy|26-07-2013|0722634732',
+    'Jayson Kariuki Njoroge|Boy|21-02-2015|0798165830 / 0719775702',
+    'Joseph Owino|Boy||',
+    'Judah Thuo|Boy||',
+    'Lawrence Gathumbi Kariuki|Boy|05-08-2010|0721616465',
+    'Levis Warui|Boy|25-04-2011|0725259543',
+    'Lewis Kimani|Boy||',
+    'Mark Thuo Mbugua|Boy|30-04-2009|0722815753',
+    'Maxwell Njoroge|Boy||',
+    'Melvin Mugweru Ngugi|Boy|24-07-2013|0721380981',
+    'Mike Murimi Mwenda|Boy|31-01-2013|0725741901',
+    'Moses Mwangi|Boy||',
+    'Nelon Kipchumba|Boy||',
+    'Peter Stevenson|Boy|11-11-2011|0710144986',
+    'Prince Njagi Gaku|Boy||',
+    'Quincy Njomo Karaya|Boy|28-06-2013|0713294728',
+    'Ramsey Thuita|Boy||',
+    'Robert Wanyoike|Boy||',
+    'Ruben Ndungu Gichungu|Boy|13-05-2011|0724917000',
+    'Ryan Wathika|Boy|02-08-2008|0728832902',
+    'Ryan Gicharu|Boy||',
+    'Ryan Kibe|Boy||',
+    'Samuel Gitanga|Boy||',
+    'Stevenson Gikonyo Gitu|Boy||',
+    'Travis Odari|Boy||',
+    'Victor Macharia Mwangi|Boy|17-03-2013|0721768491',
+    'Victor Waihenya|Boy||',
+    'Wayne Kariuki Mureithi|Boy|27-03-2011|0728147860',
+    'Wilson Mutahi|Boy||',
+    'Abigael Wairimu|Girl||',
+    'Alisa Wanjiku Mbatia|Girl||',
+    'Angel Kinya Githu|Girl||',
+    'Angel Nyambura Cheira|Girl||',
+    'Angel Wathithi|Girl||',
+    'Ann Wambui Mburu|Girl|30-07-2009|0712239863',
+    'Betty Wangare Njuguna|Girl|19-05-2013|0701216070',
+    'Blessing Mercy Mwangi|Girl|13-06-2013|0723990503',
+    'Blessing Wanja Nderitu|Girl|09-11-2010|0731200687',
+    'Brilliantine Wanjiru Mwangi|Girl|30-09-2013|0795586878',
+    'Cecilia Wanjiru Irungu|Girl|23-03-2008|0728407575',
+    'Chantal Wanjiru|Girl||',
+    'Cynthia Njeri Mwangi|Girl||',
+    'Dorcas Wanjiku Gathoni|Girl||',
+    'Doris Wambui|Girl||',
+    'Ekaterine Wanjiru Mwaniki|Girl|11-09-2012|0727386245',
+    'Faith Muthoni Nyokabi|Girl|20-07-2011|0714470263',
+    'Faith Waithera Kamau|Girl||',
+    'Faith Wathithi Okiya|Girl|01-12-2009|0726902800',
+    'Felicity Sasha Muiruri|Girl|19-03-2012|0726534717',
+    'Flava Njeri Mbuthia|Girl|22-07-2012|0710639503',
+    'Hannah Wathoni Ngata|Girl||',
+    'Happiness Njeri Mwaura|Girl|26-05-2012|0728341555',
+    'Hope Muthoni Karaya|Girl|22-11-2013|0713294728',
+    'Hope Wanyi|Girl||',
+    'Josphine Nyawira|Girl||',
+    'Joy Elizabeth Wambui|Girl||',
+    'Joy Mwiheria|Girl||',
+    'Joy Wambui|Girl|08-02-2010|0702226047',
+    'Joy Wangeci Nderitu|Girl|13-03-2012|0710930337',
+    'Joy Wangui Wambugu|Girl||',
+    'Joy Wanjugu Mathenge|Girl||',
+    'Joy Wathoni Ngata|Girl||',
+    'Joyline Wanjiru Mwangi|Girl||',
+    'Julia Wambui|Girl||',
+    'Keisha Muthoni|Girl||',
+    'Keziah Wangare|Girl||',
+    'Khot Malueth Deng|Girl|19-07-2009|0710920093',
+    'Leah Waitherero Gitu|Girl|05-04-2009|0708385867',
+    'Leslie Wanjiru Gaku|Girl|29-07-2009|0721792823',
+    'Lisa Watetu|Girl||',
+    'Loise Njeri Gichuhi|Girl||',
+    'Magdaline Nyokabi|Girl||',
+    'Margaret Muthoni Waihenya|Girl|09-03-2013|0720395924',
+    'Margaret Njeri Mwangi|Girl||',
+    'Martha Nyambura Kinoo|Girl|22-08-2012|0726317367',
+    'Mary Carol Auma|Girl|17-10-2010|0746744970',
+    'Mary Monicah Wambui Kahiga|Girl|22-11-2011|0710660913',
+    'Mary Njeri Kingori|Girl||',
+    'Maryjoy Kagure Kamau|Girl||',
+    'Maureen Wangari Kamau|Girl|19-03-2011|0721961075',
+    'Meagan Wanjiru Nganga|Girl||',
+    'Mercy Muthoni Kamau|Girl||',
+    'Mercy Nduta Irungu|Girl||',
+    'Mercy Njeri|Girl||',
+    'Mitchell Njeri|Girl||',
+    'Nellius Gathoni|Girl||',
+    'Nicole Njeri Mureithi|Girl|29-04-2010|0722358020',
+    'Peninnah Njeri Wairimu|Girl|11-05-2013|',
+    'Phylis Wanjiru Kamanda|Girl|24-05-2012|0791892255',
+    'Precious Mbatia|Girl||',
+    'Precious Wangari Njoroge|Girl|10-06-2014|0722636383',
+    'Rejoice Ngina Nyongi|Girl||',
+    'Roselyne Njoki Nyambura|Girl||',
+    'Rosemary Waithera Mwangi|Girl||',
+    'Ruby Sony Simba|Girl||',
+    'Shanice Wangare Ngambi|Girl||',
+    'Sharleen Nyambura Waithera|Girl|11-03-2010|0722396879',
+    'Shervin Nyaguthie|Girl||',
+    'Stacy Wambui Nyokabi|Girl|19-05-2013|0714470263',
+    'Stella Maris Syombua|Girl||',
+    'Susan Wamuyu|Girl|06-09-2011|0702226047',
+    'Sylvia Makena|Girl||',
+    'Sylvia Wangui Ihiga|Girl|09-11-2009|0725501937',
+    'Tashley Wangari|Girl||',
+    'Tinishia Wanjiru Karaya|Girl|25-11-2009|0713294728',
+    'Triza Wanjiru|Girl||',
+    'Valentia Wanjiru Kahiga|Girl|13-04-2013|0710660913',
+    'Yvonne Kawira Muchangi|Girl|12-11-2012|0723008186',
+    'Yvonne Nyambura|Girl||',
+    'Yvonne Wairimu|Girl||',
+    'Yvonne Wangui Mwai|Girl|16-09-2012|0710718468'
+  ];
+
+  var $ = function(s){ return document.querySelector(s); };
+  var esc = function(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+    });
+  };
+  var uid = function(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); };
+  var thisMonth = function(){ return new Date().toISOString().slice(0, 7); };
+  var thisYear = function(){ return new Date().getFullYear(); };
+  var mLabel = function(k){
+    var p = k.split('-');
+    return new Date(p[0], p[1] - 1, 1).toLocaleString(undefined, { month: 'short', year: 'numeric' });
+  };
+  var byName = function(a, b){ return a.name.localeCompare(b.name); };
+
+  function ageFromDob(dob){
+    if (!dob) return 0;
+    var p = String(dob).split('-');
+    if (p.length !== 3) return 0;
+    var d = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]));
+    if (isNaN(d.getTime())) return 0;
+    var now = new Date();
+    var a = now.getFullYear() - d.getFullYear();
+    var m = now.getMonth() - d.getMonth();
+    if (m < 0 || (m === 0 && now.getDate() < d.getDate())) a--;
+    if (a < 0 || a > 30) return 0;
+    return a;
+  }
+
+  function ageOf(s){
+    var a = ageFromDob(s.dob);
+    if (a) return a;
+    var m = parseInt(s.age, 10);
+    return m > 0 ? m : 0;
+  }
+
+  function buildSeed(){
+    var list = [];
+    for (var i = 0; i < roster.length; i++){
+      var p = roster[i].split('|');
+      list.push({ id: 'm' + i + uid(), name: p[0], gender: p[1] || '', dob: p[2] || '', age: '', contact: p[3] || '', school: '', level: '', location: '' });
+    }
+    return list;
+  }
+
+  var db = null;
+  try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; }
+  if (!db || !db.students || !db.students.length){
+    db = { students: buildSeed(), offerings: {}, settings: { currency: 'KSh', org: 'Boys and Girls Brigade 2026' } };
+  }
+  if (!db.offerings) db.offerings = {};
+  if (!db.settings) db.settings = { currency: 'KSh', org: 'Boys and Girls Brigade 2026' };
+  if (!db.settings.currency) db.settings.currency = 'KSh';
+  db.students.forEach(function(s){ if (s.age === undefined) s.age = ''; });
+  Object.keys(db.offerings).forEach(function(k){
+    var amount = Math.round((Number(db.offerings[k]) || 0) / 5) * 5;
+    if (amount >= 10) db.offerings[k] = amount; else delete db.offerings[k];
+  });
+
+  var charts = {};
+  var genderFilter = '';
+  var offerMode = 'month';
+  var reportMonth = thisMonth();
+
+  function save(){ localStorage.setItem(KEY, JSON.stringify(db)); }
+  function cur(){ return db.settings.currency; }
+  function money(n){
+    return cur() + ' ' + Number(n || 0).toLocaleString('en-KE', { maximumFractionDigits: 0 });
+  }
+  function short(n){ return Number(n || 0).toLocaleString('en-KE', { maximumFractionDigits: 0 }); }
+
+  var toastTimer;
+  function toast(msg){
+    var t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('on'); }, 1800);
+  }
+
+  function monthTotal(m){
+    var s = 0;
+    for (var k in db.offerings) if (k.slice(-8) === '|' + m) s += Number(db.offerings[k] || 0);
+    return s;
+  }
+
+  function yearTotal(y){
+    var s = 0;
+    for (var k in db.offerings){
+      var m = k.split('|')[1];
+      if (m && m.indexOf(y) === 0) s += Number(db.offerings[k] || 0);
+    }
+    return s;
+  }
+
+  function genderTag(g){
+    if (!g) return '';
+    return '<span class="tag ' + (g === 'Boy' ? 'b' : 'g') + '">' + esc(g) + '</span>';
+  }
+
+  function setOffer(id, m, value){
+    var k = id + '|' + m;
+    var amount = Number(value) || 0;
+    if (!Number.isInteger(amount) || (amount > 0 && amount % 5 !== 0)){
+      toast('Offerings must be whole amounts in increments of 5');
+      return false;
+    }
+    if (amount > 0 && amount < 10){
+      toast('Minimum offering is ' + cur() + ' 10');
+      return false;
+    }
+    if (amount > 0) db.offerings[k] = amount; else delete db.offerings[k];
+    return true;
+  }
+
+  function openView(view){
+    document.querySelectorAll('.nav button').forEach(function(b){
+      b.classList.toggle('on', b.dataset.v === view);
+    });
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
+    $('#v-' + view).classList.add('on');
+    if (view === 'reports') renderReports();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  document.querySelectorAll('.nav button').forEach(function(b){
+    b.onclick = function(){ openView(b.dataset.v); };
+  });
+
+  document.querySelectorAll('.dashboard-card').forEach(function(card){
+    card.onclick = function(){
+      var destination = card.dataset.dashboard;
+      if (destination === 'boys' || destination === 'girls'){
+        genderFilter = destination === 'boys' ? 'Boy' : 'Girl';
+        $('#f-search').value = '';
+        document.querySelectorAll('#seg button').forEach(function(b){
+          b.classList.toggle('on', b.dataset.g === genderFilter);
+        });
+        renderMembers();
+        openView('students');
+      } else if (destination === 'members'){
+        genderFilter = '';
+        $('#f-search').value = '';
+        document.querySelectorAll('#seg button').forEach(function(b){
+          b.classList.toggle('on', b.dataset.g === '');
+        });
+        renderMembers();
+        openView('students');
+      } else if (destination === 'offerings'){
+        openView('offerings');
+      }
+    };
+  });
+
+  document.querySelectorAll('[data-report-date]').forEach(function(card){
+    card.onclick = function(){
+      $('#report-month').value = reportMonth;
+      $('#report-date-dialog').showModal();
+    };
+  });
+  $('#report-date-cancel').onclick = function(){ $('#report-date-dialog').close(); };
+  $('#report-date-form').onsubmit = function(e){
+    e.preventDefault();
+    if (!$('#report-month').value) return;
+    reportMonth = $('#report-month').value;
+    $('#report-date-dialog').close();
+    renderReports();
+  };
+
+  $('#seg').onclick = function(e){
+    var b = e.target.closest('button');
+    if (!b) return;
+    document.querySelectorAll('#seg button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    genderFilter = b.dataset.g;
+    renderMembers();
+  };
+
+  $('#oseg').onclick = function(e){
+    var b = e.target.closest('button');
+    if (!b) return;
+    document.querySelectorAll('#oseg button').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on');
+    offerMode = b.dataset.m;
+    if (offerMode === 'year'){
+      $('#mode-month').style.display = 'none';
+      $('#mode-year').style.display = 'block';
+      $('#o-month').style.display = 'none';
+      $('#o-year').style.display = 'block';
+      renderYear();
+    } else {
+      $('#mode-month').style.display = 'block';
+      $('#mode-year').style.display = 'none';
+      $('#o-month').style.display = 'block';
+      $('#o-year').style.display = 'none';
+      renderOfferings();
+    }
+  };
+
+  function renderDash(){
+    $('#count').textContent = db.students.length + ' members';
+    $('#s-total').textContent = db.students.length;
+    $('#s-boys').textContent = db.students.filter(function(s){ return s.gender === 'Boy'; }).length;
+    $('#s-girls').textContent = db.students.filter(function(s){ return s.gender === 'Girl'; }).length;
+    $('#s-month').textContent = money(monthTotal(thisMonth()));
+
+    var ages = db.students.map(ageOf).filter(function(a){ return a > 0; });
+    if (ages.length){
+      var sum = ages.reduce(function(a, b){ return a + b; }, 0);
+      $('#s-age').textContent = (sum / ages.length).toFixed(1) + ' yrs';
+    } else {
+      $('#s-age').textContent = '—';
+    }
+  }
+
+  function renderMembers(){
+    var q = ($('#f-search').value || '').toLowerCase();
+    var rows = db.students.filter(function(s){
+      if (genderFilter && s.gender !== genderFilter) return false;
+      if (!q) return true;
+      return (s.name + ' ' + (s.school || '') + ' ' + (s.location || '') + ' ' + (s.contact || '')).toLowerCase().indexOf(q) > -1;
+    }).sort(byName);
+
+    if (!rows.length){
+      $('#tbl-students').innerHTML = '<div class="empty">No members found</div>';
+      return;
+    }
+
+    var body = rows.map(function(s){
+      var age = ageOf(s);
+      var ageCell = s.dob
+        ? '<span class="agepill">' + (age || '—') + '</span>'
+        : '<input class="cell ag" type="number" min="1" max="30" data-id="' + s.id + '" data-f="age" value="' + esc(s.age) + '" placeholder="—">';
+
+      return '<tr>' +
+        '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
+        '<td data-l="D.O.B" class="muted">' + esc(s.dob || '—') + '</td>' +
+        '<td data-l="Age">' + ageCell + '</td>' +
+        '<td data-l="Contact" class="muted">' + esc(s.contact || '—') + '</td>' +
+        '<td data-l="School"><input class="cell" data-id="' + s.id + '" data-f="school" value="' + esc(s.school) + '" placeholder="Add school"></td>' +
+        '<td data-l="Level"><input class="cell lv" data-id="' + s.id + '" data-f="level" value="' + esc(s.level) + '" placeholder="Level"></td>' +
+        '<td data-l="Location"><input class="cell" data-id="' + s.id + '" data-f="location" value="' + esc(s.location) + '" placeholder="Add location"></td>' +
+        '<td class="actcell"><button class="btn sec sm" data-ed="' + s.id + '">Edit</button> <button class="btn dng sm" data-del="' + s.id + '">Del</button></td>' +
+      '</tr>';
+    }).join('');
+
+    $('#tbl-students').innerHTML =
+      '<table class="rt"><thead><tr><th>Name</th><th>D.O.B</th><th>Age</th><th>Contact</th><th>School</th><th>Level</th><th>Current location</th><th></th></tr></thead><tbody>' +
+      body + '</tbody></table>';
+
+    document.querySelectorAll('.cell').forEach(function(inp){
+      inp.onchange = function(){
+        var s = db.students.find(function(x){ return x.id === inp.dataset.id; });
+        if (!s) return;
+        s[inp.dataset.f] = inp.value.trim();
+        save();
+        renderDash();
+        toast('Saved');
+      };
+    });
+
+    document.querySelectorAll('[data-ed]').forEach(function(b){
+      b.onclick = function(){ openForm(b.dataset.ed); };
+    });
+
+    document.querySelectorAll('[data-del]').forEach(function(b){
+      b.onclick = function(){
+        var s = db.students.find(function(x){ return x.id === b.dataset.del; });
+        if (confirm('Remove ' + s.name + '?')){
+          db.students = db.students.filter(function(x){ return x.id !== s.id; });
+          for (var k in db.offerings) if (k.indexOf(s.id + '|') === 0) delete db.offerings[k];
+          save();
+          renderAll();
+          toast('Removed');
+        }
+      };
+    });
+  }
+
+  function openForm(id){
+    $('#form-panel').style.display = 'block';
+    var s = id ? db.students.find(function(x){ return x.id === id; }) : null;
+    $('#form-title').textContent = s ? 'Edit member' : 'Add member';
+    $('#f-id').value = s ? s.id : '';
+    ['name', 'gender', 'dob', 'age', 'contact', 'school', 'level', 'location'].forEach(function(f){
+      $('#f-' + f).value = s ? (s[f] || '') : '';
+    });
+    $('#f-name').focus();
+    $('#form-panel').scrollIntoView({ block: 'nearest' });
+  }
+
+  $('#btn-add').onclick = function(){ openForm(); };
+  $('#btn-cancel').onclick = function(){ $('#form-panel').style.display = 'none'; };
+
+  $('#btn-save').onclick = function(){
+    var name = $('#f-name').value.trim();
+    if (!name){ toast('Name is required'); $('#f-name').focus(); return; }
+    var data = {
+      name: name,
+      gender: $('#f-gender').value,
+      dob: $('#f-dob').value.trim(),
+      age: $('#f-age').value.trim(),
+      contact: $('#f-contact').value.trim(),
+      school: $('#f-school').value.trim(),
+      level: $('#f-level').value.trim(),
+      location: $('#f-location').value.trim()
+    };
+    var id = $('#f-id').value;
+    if (id){
+      var s = db.students.find(function(x){ return x.id === id; });
+      for (var key in data) s[key] = data[key];
+      toast('Updated');
+    } else {
+      data.id = uid();
+      db.students.push(data);
+      toast('Added');
+    }
+    save();
+    $('#form-panel').style.display = 'none';
+    renderAll();
+  };
+
+  $('#f-search').oninput = renderMembers;
+
+  function renderOfferings(){
+    var m = $('#o-month').value || thisMonth();
+    $('#o-month').value = m;
+    var q = ($('#o-search').value || '').toLowerCase();
+    var rows = db.students.filter(function(s){ return !q || s.name.toLowerCase().indexOf(q) > -1; }).sort(byName);
+
+    if (!rows.length){
+      $('#tbl-offerings').innerHTML = '<div class="empty">No members found</div>';
+      return;
+    }
+
+    var total = 0;
+    var body = rows.map(function(s){
+      var v = Number(db.offerings[s.id + '|' + m] || 0);
+      total += v;
+      return '<tr>' +
+        '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
+        '<td data-l="School" class="muted">' + esc(s.school || '—') + '</td>' +
+        '<td data-l="Offering"><div class="row" style="gap:6px;flex-wrap:nowrap;width:100%">' + cur() +
+          '<input class="amt" type="number" min="10" step="5" value="' + (v || '') + '" data-off="' + s.id + '" placeholder="10">' +
+        '</div></td>' +
+      '</tr>';
+    }).join('');
+
+    $('#tbl-offerings').innerHTML =
+      '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + mLabel(m) + '</b> &middot; total collected: <b style="color:#b45309">' + money(total) + '</b></div>' +
+      '<table class="rt"><thead><tr><th>Member</th><th>School</th><th>Offering (' + cur() + ')</th></tr></thead><tbody>' +
+        body +
+        '<tr class="tot-row"><td colspan="3">Total for ' + mLabel(m) + ': ' + money(total) + '</td></tr>' +
+      '</tbody></table>';
+
+    document.querySelectorAll('[data-off]').forEach(function(inp){
+      inp.onchange = function(){
+        if (!setOffer(inp.dataset.off, m, inp.value)){
+          renderOfferings();
+          return;
+        }
+        save();
+        renderOfferings();
+        renderDash();
+      };
+    });
+  }
+
+  function renderYear(){
+    var y = String($('#o-year').value || thisYear());
+    $('#o-year').value = y;
+    var q = ($('#o-search').value || '').toLowerCase();
+    var rows = db.students.filter(function(s){ return !q || s.name.toLowerCase().indexOf(q) > -1; }).sort(byName);
+
+    if (!rows.length){
+      $('#tbl-year').innerHTML = '<div class="empty">No members found</div>';
+      return;
+    }
+
+    var colTotals = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var grand = 0;
+
+    var body = rows.map(function(s){
+      var rowTotal = 0;
+      var cells = MONTHS.map(function(mm, i){
+        var v = Number(db.offerings[s.id + '|' + y + '-' + mm] || 0);
+        rowTotal += v;
+        colTotals[i] += v;
+        return '<td><input type="number" min="10" step="5" value="' + (v || '') + '" data-y="' + y + '" data-m="' + mm + '" data-id="' + s.id + '" placeholder="10"></td>';
+      }).join('');
+      grand += rowTotal;
+      return '<tr>' +
+        '<td class="name"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
+        cells +
+        '<td class="rowtotal">' + (rowTotal ? short(rowTotal) : '—') + '</td>' +
+      '</tr>';
+    }).join('');
+
+    var foot = MONTHS.map(function(mm, i){
+      return '<td class="mtot">' + (colTotals[i] ? short(colTotals[i]) : '—') + '</td>';
+    }).join('');
+
+    $('#tbl-year').innerHTML =
+      '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + y + '</b> &middot; year total: <b style="color:#b45309">' + money(grand) + '</b></div>' +
+      '<table class="yt"><thead><tr><th class="name">Member</th>' +
+      MNAME.map(function(n){ return '<th>' + n + '</th>'; }).join('') +
+      '<th>Total</th></tr></thead><tbody>' + body + '</tbody>' +
+      '<tfoot><tr class="tot-row"><td class="name">All members</td>' + foot + '<td class="mtot">' + short(grand) + '</td></tr></tfoot></table>';
+
+    document.querySelectorAll('#tbl-year input').forEach(function(inp){
+      inp.onchange = function(){
+        if (!setOffer(inp.dataset.id, inp.dataset.y + '-' + inp.dataset.m, inp.value)){
+          renderYear();
+          return;
+        }
+        save();
+        renderYear();
+        renderDash();
+      };
+    });
+  }
+
+  $('#o-month').onchange = renderOfferings;
+  $('#o-year').onchange = renderYear;
+  $('#o-search').oninput = function(){
+    if (offerMode === 'year') renderYear(); else renderOfferings();
+  };
+
+  function renderReports(){
+    var y = reportMonth.slice(0, 4);
+    $('#r-year-label').textContent = y;
+    $('#r-months-year').textContent = y;
+    $('#r-year').textContent = money(yearTotal(y));
+    $('#r-month-label').textContent = mLabel(reportMonth);
+
+    var months = {};
+    for (var k in db.offerings){
+      var m = k.split('|')[1];
+      if (m && m.indexOf(y + '-') === 0) months[m] = (months[m] || 0) + Number(db.offerings[k] || 0);
+    }
+    var keys = Object.keys(months).sort();
+    $('#r-months').textContent = keys.length;
+
+    $('#r-month-total').textContent = money(monthTotal(reportMonth));
+
+    var per = {};
+    for (var j in db.offerings){
+      var parts = j.split('|');
+      if (parts[1] && parts[1].indexOf(y + '-') === 0){
+        per[parts[0]] = (per[parts[0]] || 0) + Number(db.offerings[j] || 0);
+      }
+    }
+    var top = Object.keys(per).map(function(sid){
+      return [db.students.find(function(s){ return s.id === sid; }), per[sid]];
+    }).filter(function(x){ return x[0]; }).sort(function(a, b){ return b[1] - a[1]; }).slice(0, 10);
+
+    if (top.length){
+      $('#r-top').innerHTML = '<div class="tbl-scroll"><table class="rt"><thead><tr><th>#</th><th>Member</th><th>Age</th><th>School</th><th style="text-align:right">Total given</th></tr></thead><tbody>' +
+        top.map(function(t, i){
+          var a = ageOf(t[0]);
+          return '<tr><td class="namecell"><div class="nm">' + (i + 1) + '. ' + esc(t[0].name) + '</div></td>' +
+            '<td data-l="Age" class="muted">' + (a || '—') + '</td>' +
+            '<td data-l="School" class="muted">' + esc(t[0].school || '—') + '</td>' +
+            '<td data-l="Total given" style="text-align:right">' + money(t[1]) + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    } else {
+      $('#r-top').innerHTML = '<div class="empty">No offerings recorded yet</div>';
+    }
+
+    drawChart('chart-month', keys.map(mLabel), keys.map(function(m){ return months[m]; }));
+  }
+
+  function drawChart(id, labels, data){
+    if (charts[id]) charts[id].destroy();
+    var ctx = document.getElementById(id);
+    if (!ctx || typeof Chart === 'undefined') return;
+    charts[id] = new Chart(ctx, {
+      type: 'bar',
+      data: { labels: labels, datasets: [{ data: data, backgroundColor: '#4338ca', borderRadius: 6, maxBarThickness: 44 }] },
+      options: {
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){ return money(c.parsed.y); } } } },
+        scales: {
+          y: { beginAtZero: true, ticks: { font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+          x: { ticks: { font: { size: 10 } }, grid: { display: false } }
+        }
+      }
+    });
+  }
+
+  $('#btn-print').onclick = function(){
+    var rows = db.students.slice().sort(byName).map(function(s){
+      var a = ageOf(s);
+      return '<tr><td>' + esc(s.name) + '</td><td>' + esc(s.gender || '') + '</td><td>' + esc(s.dob || '') + '</td><td>' + (a || '') + '</td><td>' + esc(s.contact || '') + '</td><td>' + esc(s.school || '') + '</td><td>' + esc(s.location || '') + '</td></tr>';
+    }).join('');
+
+    $('#printArea').innerHTML =
+      '<h2>' + esc(db.settings.org) + '</h2>' +
+      '<table><thead><tr><th>Name</th><th>Gender</th><th>D.O.B</th><th>Age</th><th>Contact</th><th>School</th><th>Location</th></tr></thead><tbody>' +
+      rows + '</tbody></table>';
+
+    window.print();
+  };
+
+  $('#btn-export').onclick = function(){
+    var blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'brigade-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    a.click();
+    toast('Backup downloaded');
+  };
+
+  $('#btn-import').onclick = function(){ $('#file-import').click(); };
+
+  $('#file-import').onchange = function(e){
+    var f = e.target.files[0];
+    if (!f) return;
+    var r = new FileReader();
+    r.onload = function(){
+      try {
+        var d = JSON.parse(r.result);
+        if (!d.students) throw 0;
+        db = d;
+        if (!db.offerings) db.offerings = {};
+        if (!db.settings) db.settings = { currency: 'KSh', org: 'Boys and Girls Brigade 2026' };
+        db.students.forEach(function(s){ if (s.age === undefined) s.age = ''; });
+        save();
+        initUI();
+        toast('Restored');
+      } catch (x) { toast('Invalid backup'); }
+    };
+    r.readAsText(f);
+  };
+
+  $('#btn-org').onclick = function(){
+    db.settings.org = $('#f-org').value.trim() || 'Boys and Girls Brigade 2026';
+    save();
+    $('#org').textContent = db.settings.org;
+    toast('Saved');
+  };
+
+  $('#btn-clear').onclick = function(){
+    if (confirm('Erase all members and offerings?')){
+      var settings = { currency: db.settings.currency, org: db.settings.org };
+      db = { students: buildSeed(), offerings: {}, settings: settings };
+      save();
+      initUI();
+      toast('Cleared');
+    }
+  };
+
+  $('#currency').onchange = function(){
+    db.settings.currency = $('#currency').value;
+    save();
+    renderAll();
+  };
+
+  function initUI(){
+    $('#org').textContent = db.settings.org || 'Boys and Girls Brigade 2026';
+    $('#f-org').value = db.settings.org || 'Boys and Girls Brigade 2026';
+    $('#currency').value = db.settings.currency || 'KSh';
+    $('#o-month').value = thisMonth();
+    $('#o-year').value = thisYear();
+    renderAll();
+  }
+
+  function renderAll(){
+    renderDash();
+    renderMembers();
+    renderOfferings();
+    if (offerMode === 'year') renderYear();
+    if ($('#v-reports').classList.contains('on')) renderReports();
+  }
+
+  function bytesToHex(bytes){
+    return Array.prototype.map.call(bytes, function(b){ return ('0' + b.toString(16)).slice(-2); }).join('');
+  }
+
+  function hexToBytes(hex){
+    var bytes = new Uint8Array(hex.length / 2);
+    for (var i = 0; i < bytes.length; i++) bytes[i] = parseInt(hex.slice(i * 2, i * 2 + 2), 16);
+    return bytes;
+  }
+
+  function derivePasscode(passcode, salt){
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(passcode), 'PBKDF2', false, ['deriveBits'])
+      .then(function(key){
+        return crypto.subtle.deriveBits({ name: 'PBKDF2', salt: salt, iterations: AUTH_ITERATIONS, hash: 'SHA-256' }, key, 256);
+      })
+      .then(function(bits){ return new Uint8Array(bits); });
+  }
+
+  function initAuth(){
+    var form = $('#auth-form');
+    var passcode = $('#auth-passcode');
+    var confirm = $('#auth-confirm');
+    var confirmField = $('#auth-confirm-field');
+    var error = $('#auth-error');
+    var submit = $('#auth-submit');
+    var authRecord;
+
+    try {
+      authRecord = JSON.parse(localStorage.getItem(AUTH_KEY));
+    } catch (e) {
+      error.textContent = 'Unable to read passcode settings from this browser.';
+      return;
+    }
+
+    var isSetup = !authRecord;
+    confirmField.hidden = !isSetup;
+    confirm.required = isSetup;
+    passcode.autocomplete = isSetup ? 'new-password' : 'current-password';
+    $('#auth-description').textContent = isSetup
+      ? 'Create a passcode for this browser. Use at least 8 characters.'
+      : 'Enter your passcode to open the register.';
+    submit.textContent = isSetup ? 'Set passcode' : 'Unlock';
+
+    if (!crypto.subtle || !window.TextEncoder){
+      error.textContent = 'Passcode protection requires a modern browser with Web Crypto support.';
+      submit.disabled = true;
+      return;
+    }
+
+    form.onsubmit = function(event){
+      event.preventDefault();
+      error.textContent = '';
+      if (passcode.value.length < 8){
+        error.textContent = 'Use a passcode with at least 8 characters.';
+        return;
+      }
+      if (isSetup && passcode.value !== confirm.value){
+        error.textContent = 'The passcodes do not match.';
+        return;
+      }
+
+      submit.disabled = true;
+      if (isSetup){
+        var salt = crypto.getRandomValues(new Uint8Array(16));
+        derivePasscode(passcode.value, salt).then(function(hash){
+          localStorage.setItem(AUTH_KEY, JSON.stringify({
+            salt: bytesToHex(salt),
+            hash: bytesToHex(hash),
+            iterations: AUTH_ITERATIONS
+          }));
+          unlock();
+        }).catch(function(){
+          error.textContent = 'Could not set the passcode. Check browser storage and try again.';
+          submit.disabled = false;
+        });
+        return;
+      }
+
+      if (!authRecord || typeof authRecord.salt !== 'string' || typeof authRecord.hash !== 'string' ||
+          !Number.isInteger(authRecord.iterations) || authRecord.iterations < 1){
+        error.textContent = 'Passcode settings are invalid. Clear this browser’s site data to set up again.';
+        submit.disabled = false;
+        return;
+      }
+      crypto.subtle.importKey('raw', new TextEncoder().encode(passcode.value), 'PBKDF2', false, ['deriveBits'])
+        .then(function(key){
+          return crypto.subtle.deriveBits({
+            name: 'PBKDF2',
+            salt: hexToBytes(authRecord.salt),
+            iterations: authRecord.iterations,
+            hash: 'SHA-256'
+          }, key, 256);
+        })
+        .then(function(bits){
+          if (bytesToHex(new Uint8Array(bits)) !== authRecord.hash){
+            error.textContent = 'Incorrect passcode.';
+            submit.disabled = false;
+            passcode.focus();
+            return;
+          }
+          unlock();
+        })
+        .catch(function(){
+          error.textContent = 'Could not verify the passcode. Check browser storage and try again.';
+          submit.disabled = false;
+        });
+    };
+
+    function unlock(){
+      document.documentElement.classList.remove('auth-locked');
+      passcode.value = '';
+      confirm.value = '';
+      initUI();
+    }
+  }
+
+  initAuth();
+})();
+</script>
+</body>
+</html>
