@@ -96,6 +96,13 @@
   .auth-card p{margin:0 0 18px;color:#5b6473;font-size:13px}
   .auth-error{min-height:20px;margin:8px 0;color:#b91c1c;font-size:12px}
   .auth-warning{margin-top:16px!important;font-size:11px!important}
+  .password-input-wrap{position:relative}
+  .password-input-wrap input{padding-right:44px}
+  .password-toggle{position:absolute;top:50%;right:5px;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:34px;height:34px;border:0;border-radius:7px;background:transparent;color:#6b7280;cursor:pointer}
+  .password-toggle:hover{background:#f3f4f6;color:#111827}
+  .password-toggle:focus-visible{outline:2px solid #4338ca;outline-offset:1px}
+  .password-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .password-toggle[aria-pressed="true"] .eye-show,.password-toggle[aria-pressed="false"] .eye-hide{display:none}
   html.auth-locked #printArea,html.auth-locked .toast{display:none}
 
   @media print{
@@ -159,18 +166,20 @@
 
 <section class="auth-screen" aria-labelledby="auth-title">
   <form class="auth-card" id="auth-form">
-    <h1 id="auth-title">Protect this register</h1>
-    <p id="auth-description">Set a passcode to restrict casual access on this browser.</p>
+    <h1 id="auth-title">Sign in</h1>
+    <p id="auth-description">Enter your passcode to open the register.</p>
     <div class="field">
       <label for="auth-passcode">Passcode</label>
-      <input id="auth-passcode" type="password" autocomplete="new-password" minlength="8" required>
-    </div>
-    <div class="field" id="auth-confirm-field">
-      <label for="auth-confirm">Confirm passcode</label>
-      <input id="auth-confirm" type="password" autocomplete="new-password" minlength="8" required>
+      <div class="password-input-wrap">
+        <input id="auth-passcode" type="password" autocomplete="off" readonly minlength="8" required>
+        <button class="password-toggle" type="button" data-toggle-password="auth-passcode" aria-label="Show passcode" aria-pressed="false">
+          <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.9"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.3 10.3 0 0 0 4-.8"></path></svg>
+        </button>
+      </div>
     </div>
     <div class="auth-error" id="auth-error" role="alert"></div>
-    <button class="btn" id="auth-submit" type="submit">Set passcode</button>
+    <button class="btn" id="auth-submit" type="submit">Continue</button>
     <p class="auth-warning">This browser-only passcode is not a firewall or strong security. Data remains readable in browser storage and the HTML file.</p>
   </form>
 </section>
@@ -315,6 +324,31 @@
         <input id="f-org" placeholder="Boys and Girls Brigade 2026" style="max-width:320px">
         <button class="btn sec sm" id="btn-org">Save</button>
       </div>
+      <h2>Login passcode</h2>
+      <form id="change-passcode-form" style="max-width:360px;margin-bottom:22px">
+        <div class="field">
+          <label for="current-passcode">Current passcode</label>
+          <div class="password-input-wrap">
+            <input id="current-passcode" type="password" autocomplete="off" readonly required>
+            <button class="password-toggle" type="button" data-toggle-password="current-passcode" aria-label="Show current passcode" aria-pressed="false">
+              <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.9"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.3 10.3 0 0 0 4-.8"></path></svg>
+            </button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="new-passcode">New passcode</label>
+          <div class="password-input-wrap">
+            <input id="new-passcode" type="password" autocomplete="off" readonly minlength="8" required>
+            <button class="password-toggle" type="button" data-toggle-password="new-passcode" aria-label="Show new passcode" aria-pressed="false">
+              <svg class="eye-show" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg class="eye-hide" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a15.7 15.7 0 0 1-3.1 3.9"></path><path d="M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7a10.3 10.3 0 0 0 4-.8"></path></svg>
+            </button>
+          </div>
+        </div>
+        <div class="auth-error" id="change-passcode-error" role="alert"></div>
+        <button class="btn sec" id="change-passcode-submit" type="submit">Change passcode</button>
+      </form>
       <h2>Clear everything</h2>
       <button class="btn dng" id="btn-clear">Erase all data</button>
     </div>
@@ -1074,11 +1108,34 @@
   function initAuth(){
     var form = $('#auth-form');
     var passcode = $('#auth-passcode');
-    var confirm = $('#auth-confirm');
-    var confirmField = $('#auth-confirm-field');
     var error = $('#auth-error');
     var submit = $('#auth-submit');
+    var changeForm = $('#change-passcode-form');
+    var currentPasscode = $('#current-passcode');
+    var newPasscode = $('#new-passcode');
+    var changeError = $('#change-passcode-error');
+    var changeSubmit = $('#change-passcode-submit');
     var authRecord;
+
+    document.querySelectorAll('[data-toggle-password]').forEach(function(toggle){
+      toggle.onclick = function(){
+        var input = $('#' + toggle.dataset.togglePassword);
+        var showing = input.type === 'password';
+        input.type = showing ? 'text' : 'password';
+        toggle.setAttribute('aria-pressed', String(showing));
+        var label = input.id === 'auth-passcode' ? 'passcode' :
+          input.id === 'current-passcode' ? 'current passcode' : 'new passcode';
+        toggle.setAttribute('aria-label', (showing ? 'Hide ' : 'Show ') + label);
+      };
+    });
+
+    document.querySelectorAll('#auth-passcode, #current-passcode, #new-passcode').forEach(function(input){
+      function enableTyping(){
+        input.removeAttribute('readonly');
+      }
+      input.addEventListener('pointerdown', enableTyping);
+      input.addEventListener('focus', enableTyping);
+    });
 
     try {
       authRecord = JSON.parse(localStorage.getItem(AUTH_KEY));
@@ -1088,19 +1145,76 @@
     }
 
     var isSetup = !authRecord;
-    confirmField.hidden = !isSetup;
-    confirm.required = isSetup;
-    passcode.autocomplete = isSetup ? 'new-password' : 'current-password';
-    $('#auth-description').textContent = isSetup
-      ? 'Create a passcode for this browser. Use at least 8 characters.'
-      : 'Enter your passcode to open the register.';
-    submit.textContent = isSetup ? 'Set passcode' : 'Unlock';
+    $('#auth-description').textContent = 'Enter your passcode to open the register.';
+    submit.textContent = 'Continue';
 
     if (!crypto.subtle || !window.TextEncoder){
       error.textContent = 'Passcode protection requires a modern browser with Web Crypto support.';
       submit.disabled = true;
+      changeError.textContent = 'Passcode protection requires a modern browser with Web Crypto support.';
+      changeSubmit.disabled = true;
       return;
     }
+
+    changeForm.onsubmit = function(event){
+      event.preventDefault();
+      changeError.textContent = '';
+
+      if (currentPasscode.value.length < 8){
+        changeError.textContent = 'Enter your current passcode.';
+        return;
+      }
+      if (newPasscode.value.length < 8){
+        changeError.textContent = 'Use a new passcode with at least 8 characters.';
+        return;
+      }
+      if (currentPasscode.value === newPasscode.value){
+        changeError.textContent = 'Choose a different new passcode.';
+        return;
+      }
+      if (!authRecord || typeof authRecord.salt !== 'string' || typeof authRecord.hash !== 'string' ||
+          !Number.isInteger(authRecord.iterations) || authRecord.iterations < 1){
+        changeError.textContent = 'Passcode settings are invalid. Clear this browser’s site data to set up again.';
+        return;
+      }
+
+      changeSubmit.disabled = true;
+      crypto.subtle.importKey('raw', new TextEncoder().encode(currentPasscode.value), 'PBKDF2', false, ['deriveBits'])
+        .then(function(key){
+          return crypto.subtle.deriveBits({
+            name: 'PBKDF2',
+            salt: hexToBytes(authRecord.salt),
+            iterations: authRecord.iterations,
+            hash: 'SHA-256'
+          }, key, 256);
+        })
+        .then(function(bits){
+          if (bytesToHex(new Uint8Array(bits)) !== authRecord.hash){
+            changeError.textContent = 'Current passcode is incorrect.';
+            return null;
+          }
+
+          var salt = crypto.getRandomValues(new Uint8Array(16));
+          return derivePasscode(newPasscode.value, salt).then(function(hash){
+            var updatedRecord = {
+              salt: bytesToHex(salt),
+              hash: bytesToHex(hash),
+              iterations: AUTH_ITERATIONS
+            };
+            localStorage.setItem(AUTH_KEY, JSON.stringify(updatedRecord));
+            authRecord = updatedRecord;
+            currentPasscode.value = '';
+            newPasscode.value = '';
+            toast('Login passcode changed');
+          });
+        })
+        .catch(function(){
+          changeError.textContent = 'Could not change the passcode. Check browser storage and try again.';
+        })
+        .then(function(){
+          changeSubmit.disabled = false;
+        });
+    };
 
     form.onsubmit = function(event){
       event.preventDefault();
@@ -1109,20 +1223,16 @@
         error.textContent = 'Use a passcode with at least 8 characters.';
         return;
       }
-      if (isSetup && passcode.value !== confirm.value){
-        error.textContent = 'The passcodes do not match.';
-        return;
-      }
-
       submit.disabled = true;
       if (isSetup){
         var salt = crypto.getRandomValues(new Uint8Array(16));
         derivePasscode(passcode.value, salt).then(function(hash){
-          localStorage.setItem(AUTH_KEY, JSON.stringify({
+          authRecord = {
             salt: bytesToHex(salt),
             hash: bytesToHex(hash),
             iterations: AUTH_ITERATIONS
-          }));
+          };
+          localStorage.setItem(AUTH_KEY, JSON.stringify(authRecord));
           unlock();
         }).catch(function(){
           error.textContent = 'Could not set the passcode. Check browser storage and try again.';
@@ -1164,7 +1274,6 @@
     function unlock(){
       document.documentElement.classList.remove('auth-locked');
       passcode.value = '';
-      confirm.value = '';
       initUI();
     }
   }
