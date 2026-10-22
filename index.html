@@ -363,6 +363,7 @@
 (function(){
   var KEY = 'brigade_2026';
   var AUTH_KEY = 'brigade_2026_auth';
+  var AUTH_SESSION_KEY = 'brigade_2026_authenticated';
   var AUTH_ITERATIONS = 150000;
   var MONTHS = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   var MNAME = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1116,6 +1117,7 @@
     var changeError = $('#change-passcode-error');
     var changeSubmit = $('#change-passcode-submit');
     var authRecord;
+    var hasAuthenticatedSession = false;
 
     document.querySelectorAll('[data-toggle-password]').forEach(function(toggle){
       toggle.onclick = function(){
@@ -1139,8 +1141,9 @@
 
     try {
       authRecord = JSON.parse(localStorage.getItem(AUTH_KEY));
+      hasAuthenticatedSession = sessionStorage.getItem(AUTH_SESSION_KEY) === '1';
     } catch (e) {
-      error.textContent = 'Unable to read passcode settings from this browser.';
+      error.textContent = 'Unable to read sign-in settings from this browser.';
       return;
     }
 
@@ -1271,7 +1274,16 @@
         });
     };
 
+    if (hasAuthenticatedSession) unlock();
+
     function unlock(){
+      try {
+        sessionStorage.setItem(AUTH_SESSION_KEY, '1');
+      } catch (e) {
+        error.textContent = 'Unable to keep your sign-in active in this browser.';
+        submit.disabled = false;
+        return;
+      }
       document.documentElement.classList.remove('auth-locked');
       passcode.value = '';
       initUI();
