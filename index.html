@@ -49,6 +49,8 @@
   .btn.dng:hover{background:#fee2e2}
   .btn.sm{padding:5px 11px;font-size:12px;border-radius:7px}
   .row{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .rate-status{font-size:11px;color:#6b7280}
+  .rate-status.error{color:#b91c1c}
   .seg{display:flex;gap:4px;background:#f3f4f6;padding:4px;border-radius:10px}
   .seg button{border:0;background:transparent;padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:600;color:#5b6473;cursor:pointer;font-family:inherit}
   .seg button.on{background:#fff;color:#111827;box-shadow:0 1px 2px rgba(0,0,0,.06)}
@@ -198,6 +200,8 @@
         <option value="£">GBP</option>
         <option value="€">EUR</option>
       </select>
+      <span class="rate-status" id="currency-status" role="status" aria-live="polite"></span>
+      <button class="btn sec sm" id="currency-retry" type="button" style="display:none">Retry rates</button>
     </div>
   </div>
 
@@ -274,12 +278,12 @@
       </div>
 
       <div id="mode-month">
-        <div class="hint">Type each member's total offering for the month. It saves automatically.</div>
+        <div class="hint">Enter each member's total offering in KSh. It saves automatically; totals use the selected currency.</div>
         <div class="tbl-scroll" id="tbl-offerings"></div>
       </div>
 
       <div id="mode-year" style="display:none">
-        <div class="hint">Every member's giving for the whole year. Swipe sideways for the months — names stay pinned on the left.</div>
+        <div class="hint">Enter monthly offerings in KSh. Totals use the selected currency. Swipe sideways for the months — names stay pinned on the left.</div>
         <div class="tbl-scroll keepscroll" id="tbl-year"></div>
       </div>
     </div>
@@ -573,17 +577,32 @@
   });
 
   var charts = {};
+  var exchangeRates = null;
+  var exchangeRateRequest = 0;
   var genderFilter = '';
   var offerMode = 'month';
   var reportMonth = thisMonth();
 
   function save(){ localStorage.setItem(KEY, JSON.stringify(db)); }
   function cur(){ return db.settings.currency; }
-  function money(n){
-    return cur() + ' ' + Number(n || 0).toLocaleString('en-KE', { maximumFractionDigits: 0 });
+  function currencyCode(){
+    return { KSh: 'KES', '$': 'USD', '£': 'GBP', '€': 'EUR' }[cur()] || 'KES';
   }
-  function short(n){ return Number(n || 0).toLocaleString('en-KE', { maximumFractionDigits: 0 }); }
-
+  function displayCurrencyCode(){
+    var code = currencyCode();
+    return code === 'KES' || (exchangeRates && Number.isFinite(Number(exchangeRates[code]))) ? code : 'KES';
+  }
+  function money(n){
+    var code = displayCurrencyCode();
+    var amount = Number(n || 0);
+    if (code !== 'KES') amount *= Number(exchangeRates[code]);
+    var symbol = { KES: 'KSh', USD: '$', GBP: '£', EUR: '€' }[code];
+    var digits = code === 'KES' ? 0 : 2;
+    return symbol + ' ' + amount.toLocaleString('en-KE', {
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits
+    });
+  }
   var toastTimer;
   function toast(msg){
     var t = $('#toast');
@@ -621,7 +640,7 @@
       return false;
     }
     if (amount > 0 && amount < 10){
-      toast('Minimum offering is ' + cur() + ' 10');
+      toast('Minimum offering is KSh 10');
       return false;
     }
     if (amount > 0) db.offerings[k] = amount; else delete db.offerings[k];
@@ -855,7 +874,7 @@
       return '<tr>' +
         '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
         '<td data-l="School" class="muted">' + esc(s.school || '—') + '</td>' +
-        '<td data-l="Offering"><div class="row" style="gap:6px;flex-wrap:nowrap;width:100%">' + cur() +
+        '<td data-l="Offering"><div class="row" style="gap:6px;flex-wrap:nowrap;width:100%">KSh' +
           '<input class="amt" type="number" min="10" step="5" value="' + (v || '') + '" data-off="' + s.id + '" placeholder="10">' +
         '</div></td>' +
       '</tr>';
@@ -863,7 +882,7 @@
 
     $('#tbl-offerings').innerHTML =
       '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + mLabel(m) + '</b> &middot; total collected: <b style="color:#b45309">' + money(total) + '</b></div>' +
-      '<table class="rt"><thead><tr><th>Member</th><th>School</th><th>Offering (' + cur() + ')</th></tr></thead><tbody>' +
+      '<table class="rt"><thead><tr><th>Member</th><th>School</th><th>Offering (KSh)</th></tr></thead><tbody>' +
         body +
         '<tr class="tot-row"><td colspan="3">Total for ' + mLabel(m) + ': ' + money(total) + '</td></tr>' +
       '</tbody></table>';
@@ -907,20 +926,20 @@
       return '<tr>' +
         '<td class="name"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
         cells +
-        '<td class="rowtotal">' + (rowTotal ? short(rowTotal) : '—') + '</td>' +
+        '<td class="rowtotal">' + (rowTotal ? money(rowTotal) : '—') + '</td>' +
       '</tr>';
     }).join('');
 
     var foot = MONTHS.map(function(mm, i){
-      return '<td class="mtot">' + (colTotals[i] ? short(colTotals[i]) : '—') + '</td>';
+      return '<td class="mtot">' + (colTotals[i] ? money(colTotals[i]) : '—') + '</td>';
     }).join('');
 
     $('#tbl-year').innerHTML =
       '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + y + '</b> &middot; year total: <b style="color:#b45309">' + money(grand) + '</b></div>' +
       '<table class="yt"><thead><tr><th class="name">Member</th>' +
       MNAME.map(function(n){ return '<th>' + n + '</th>'; }).join('') +
-      '<th>Total</th></tr></thead><tbody>' + body + '</tbody>' +
-      '<tfoot><tr class="tot-row"><td class="name">All members</td>' + foot + '<td class="mtot">' + short(grand) + '</td></tr></tfoot></table>';
+      '<th>Total (' + displayCurrencyCode() + ')</th></tr></thead><tbody>' + body + '</tbody>' +
+      '<tfoot><tr class="tot-row"><td class="name">All members</td>' + foot + '<td class="mtot">' + money(grand) + '</td></tr></tfoot></table>';
 
     document.querySelectorAll('#tbl-year input').forEach(function(inp){
       inp.onchange = function(){
@@ -996,7 +1015,7 @@
         maintainAspectRatio: false,
         plugins: { legend: { display: false }, tooltip: { callbacks: { label: function(c){ return money(c.parsed.y); } } } },
         scales: {
-          y: { beginAtZero: true, ticks: { font: { size: 10 } }, grid: { color: '#f3f4f6' } },
+          y: { beginAtZero: true, ticks: { font: { size: 10 }, callback: function(value){ return money(value); } }, grid: { color: '#f3f4f6' } },
           x: { ticks: { font: { size: 10 } }, grid: { display: false } }
         }
       }
@@ -1069,7 +1088,16 @@
     db.settings.currency = $('#currency').value;
     save();
     renderAll();
+    if (currencyCode() === 'KES'){
+      exchangeRateRequest++;
+      $('#currency-status').textContent = '';
+      $('#currency-status').classList.remove('error');
+      $('#currency-retry').style.display = 'none';
+    } else {
+      loadExchangeRates();
+    }
   };
+  $('#currency-retry').onclick = loadExchangeRates;
 
   function initUI(){
     $('#org').textContent = db.settings.org || 'Boys and Girls Brigade 2026';
@@ -1078,6 +1106,47 @@
     $('#o-month').value = thisMonth();
     $('#o-year').value = thisYear();
     renderAll();
+    if (currencyCode() !== 'KES') loadExchangeRates();
+  }
+
+  function loadExchangeRates(){
+    var request = ++exchangeRateRequest;
+    exchangeRates = null;
+    var status = $('#currency-status');
+    status.classList.remove('error');
+    status.textContent = 'Loading live exchange rates...';
+    $('#currency-retry').style.display = 'none';
+    renderAll();
+
+    fetch('https://open.er-api.com/v6/latest/KES')
+      .then(function(response){
+        if (!response.ok) throw new Error('Exchange rate request failed.');
+        return response.json();
+      })
+      .then(function(data){
+        if (data.result !== 'success' || data.base_code !== 'KES' || !data.rates ||
+            !['USD', 'GBP', 'EUR'].every(function(code){
+              return Number.isFinite(Number(data.rates[code])) && Number(data.rates[code]) > 0;
+            })){
+          throw new Error('Exchange rate response was invalid.');
+        }
+        if (request !== exchangeRateRequest) return;
+        exchangeRates = data.rates;
+        $('#currency-retry').style.display = 'none';
+        var updated = new Date(data.time_last_update_utc);
+        status.textContent = isNaN(updated.getTime()) ?
+          'Live exchange rates loaded from ExchangeRate-API (indicative).' :
+          'Rates updated ' + updated.toLocaleDateString() + ' (ExchangeRate-API; indicative).';
+        renderAll();
+      })
+      .catch(function(){
+        if (request !== exchangeRateRequest) return;
+        exchangeRates = null;
+        status.classList.add('error');
+        status.textContent = 'Exchange rates unavailable. Showing amounts in KSh; check your internet connection.';
+        $('#currency-retry').style.display = 'inline-flex';
+        renderAll();
+      });
   }
 
   function renderAll(){
