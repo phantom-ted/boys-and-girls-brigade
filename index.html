@@ -74,11 +74,14 @@
   .cell.ag{min-width:58px;width:58px;text-align:center}
   .agepill{display:inline-block;min-width:34px;text-align:center;font-size:12.5px;font-weight:600;color:#0f766e;background:#f0fdfa;border-radius:7px;padding:4px 8px}
   .chartbox{position:relative;width:100%}
-  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111827;color:#fff;padding:10px 18px;border-radius:22px;font-size:12.5px;font-weight:500;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none}
-  .toast.on{opacity:1}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#111827;color:#fff;padding:10px 18px;
+         border-radius:22px;font-size:12.5px;font-weight:500;z-index:60;opacity:0;transition:opacity .25s;pointer-events:none;
+         display:flex;align-items:center;gap:10px;max-width:calc(100% - 32px)}
+  .toast.on{opacity:1;pointer-events:auto}
+  .toast-act{border:0;background:#fff;color:#111827;padding:4px 11px;border-radius:14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
   .sec-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px;flex-wrap:wrap}
   .tot-row td{font-weight:600;background:#fbfbfc}
-  .amt{width:115px;min-width:0}
+  .amt{width:100%;min-width:0;text-align:center;padding:6px 4px}
   .hint{font-size:11.5px;color:#a3aab6;margin:-4px 0 12px}
   .yt th,.yt td{padding:5px 4px;text-align:center;font-size:12px}
   .yt th.name,.yt td.name{text-align:left;padding-left:10px;white-space:nowrap;min-width:170px}
@@ -87,6 +90,24 @@
   .yt input:focus{border-color:#4338ca;background:#fff;outline:0}
   .yt .rowtotal{font-weight:600;color:#b45309;white-space:nowrap}
   .yt .mtot{background:#fbfbfc;font-weight:600;font-size:11.5px}
+  .wk th.wkcol,.wk td.wkcell{text-align:center;padding:4px}
+  .wk th.wkcol{font-size:10.5px;line-height:1.25}
+  .wk th.wkcol b{display:block;font-size:11.5px;color:#374151}
+  .wk th.wkcol span{display:block;color:#a3aab6;font-weight:600;font-size:10px}
+  .wk th.name,.wk td.name{position:sticky;left:0;background:#fff;z-index:2;box-shadow:1px 0 0 #eef0f3;min-width:150px}
+  .wk thead th.name{background:#fbfbfc}
+  .wk .rowtotal{font-weight:600;color:#b45309;white-space:nowrap;text-align:right;padding-right:10px}
+  .wk .mtot{background:#fbfbfc;font-weight:600;font-size:11.5px;text-align:center}
+  .num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .rankcell{width:34px;color:#8b93a1;font-weight:600;white-space:nowrap}
+  .baddate{color:#b91c1c;font-weight:600;white-space:nowrap}
+  .baddate small{font-weight:600;font-size:10px;display:block;color:#b91c1c;opacity:.75}
+  .unit{font-size:11px;color:#8b93a1;font-weight:600;flex:0 0 auto}
+  .fxn{font-size:11.5px;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px 10px;margin-bottom:8px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  /* the replacement month/year pickers */
+  .pickers{display:flex;gap:6px;flex-wrap:nowrap}
+  .pickers select{width:auto;padding:8px 10px;font-size:12.5px}
   #printArea{display:none}
   #printArea table{width:100%;border-collapse:collapse;font-size:12px}
   #printArea th,#printArea td{border:1px solid #ccc;padding:5px;text-align:left}
@@ -128,6 +149,7 @@
     .card{padding:12px}
     .card .val{font-size:20px}
     input,select{font-size:16px}
+    .pickers select{font-size:14px;padding:10px}
     .btn{padding:10px 16px}
     .btn.sm{padding:7px 12px;font-size:12px}
 
@@ -144,10 +166,11 @@
     .rt td.namecell{display:block;padding:0 0 9px;margin-bottom:7px;border-bottom:1px solid #f5f6f8}
     .rt td.namecell::before{display:none}
     .rt td.namecell .nm{font-size:15px}
+    .rt td.rankcell{display:block;padding:0;margin-bottom:2px;color:#a3aab6;font-size:11px}
+    .rt td.rankcell::before{display:none}
     .rt td.actcell{display:flex;justify-content:flex-end;gap:8px;padding-top:11px;margin-top:4px;border-top:1px solid #f5f6f8}
     .rt td.actcell::before{display:none}
     .rt .cell{flex:1;min-width:0;border-color:#eef0f3;background:#fbfbfc;font-size:16px;padding:8px 10px}
-    .rt .amt{flex:1;width:auto}
     .rt tr.tot-row{background:#fbfbfc}
     .rt tr.tot-row td{justify-content:space-between}
     .rt tr.tot-row td::before{display:none}
@@ -156,6 +179,10 @@
     .yt thead th.name{background:#fbfbfc}
     .yt input{width:56px;font-size:13px}
     .yt th,.yt td{padding:4px 2px}
+
+    .wk th.name,.wk td.name{min-width:118px}
+    .wk th.wkcol,.wk td.wkcell{padding:3px 2px}
+    .wk .amt{font-size:13px}
 
     .sec-hd{gap:8px}
     .sec-hd h2{width:100%}
@@ -190,10 +217,11 @@
   <div class="hd">
     <div>
       <h1 id="org">Boys and Girls Brigade 2026</h1>
-      <div class="sub">Members register &amp; monthly offerings</div>
+      <div class="sub">Members register &amp; Sunday offerings</div>
     </div>
     <div class="row">
       <span class="badge" id="count">0 members</span>
+      <label class="sr-only" for="currency">Display currency</label>
       <select id="currency" style="width:auto;padding:7px 10px;font-size:12px">
         <option value="KSh">KSh</option>
         <option value="$">USD</option>
@@ -205,26 +233,27 @@
     </div>
   </div>
 
-  <div class="nav">
-    <button data-v="dash" class="on">Dashboard</button>
-    <button data-v="students">Members</button>
-    <button data-v="offerings">Offerings</button>
-    <button data-v="reports">Reports</button>
-    <button data-v="data">Backup</button>
+  <div class="nav" role="tablist" aria-label="Sections">
+    <button role="tab" data-v="dash" class="on" aria-selected="true" aria-controls="v-dash" id="tab-dash">Dashboard</button>
+    <button role="tab" data-v="students" aria-selected="false" aria-controls="v-students" id="tab-students">Members</button>
+    <button role="tab" data-v="offerings" aria-selected="false" aria-controls="v-offerings" id="tab-offerings">Offerings</button>
+    <button role="tab" data-v="reports" aria-selected="false" aria-controls="v-reports" id="tab-reports">Reports</button>
+    <button role="tab" data-v="data" aria-selected="false" aria-controls="v-data" id="tab-data">Backup</button>
   </div>
+  <div class="sr-only" id="live" aria-live="polite"></div>
 
   <div class="main">
-    <div class="view on" id="v-dash">
+    <div class="view on" id="v-dash" role="tabpanel" aria-labelledby="tab-dash" tabindex="0">
       <div class="grid g5">
         <button type="button" class="card dashboard-card" data-dashboard="members"><div class="lbl">Total members</div><div class="val" id="s-total">0</div></button>
         <button type="button" class="card dashboard-card" data-dashboard="boys"><div class="lbl">Boys</div><div class="val blue" id="s-boys">0</div></button>
         <button type="button" class="card dashboard-card" data-dashboard="girls"><div class="lbl">Girls</div><div class="val pink" id="s-girls">0</div></button>
-        <button type="button" class="card dashboard-card" data-dashboard="members"><div class="lbl">Average age</div><div class="val teal" id="s-age">—</div></button>
+        <button type="button" class="card dashboard-card" data-dashboard="members"><div class="lbl">Average age <span class="muted" style="font-weight:600">(known ages)</span></div><div class="val teal" id="s-age">—</div></button>
         <button type="button" class="card dashboard-card" data-dashboard="offerings"><div class="lbl">This month's offering</div><div class="val gold" id="s-month">0</div></button>
       </div>
     </div>
 
-    <div class="view" id="v-students">
+    <div class="view" id="v-students" role="tabpanel" aria-labelledby="tab-students" tabindex="0">
       <div class="sec-hd">
         <h2 style="margin:0">Members</h2>
         <button class="btn" id="btn-add">+ Add member</button>
@@ -234,14 +263,19 @@
         <h2 id="form-title">Add member</h2>
         <input type="hidden" id="f-id">
         <div class="grid g3">
-          <div class="field"><label>Full name</label><input id="f-name" placeholder="Name"></div>
-          <div class="field"><label>Gender</label><select id="f-gender"><option value="">—</option><option>Boy</option><option>Girl</option></select></div>
-          <div class="field"><label>Date of birth</label><input id="f-dob" placeholder="dd-mm-yyyy"></div>
-          <div class="field"><label>Age (if D.O.B unknown)</label><input id="f-age" type="number" min="1" max="30" placeholder="Years"></div>
-          <div class="field"><label>Contact</label><input id="f-contact" placeholder="07xx xxx xxx"></div>
-          <div class="field"><label>School</label><input id="f-school" placeholder="School name"></div>
-          <div class="field"><label>Level / class</label><input id="f-level" placeholder="e.g. Grade 6"></div>
-          <div class="field"><label>Current location</label><input id="f-location" placeholder="Area"></div>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" placeholder="Name"></div>
+          <div class="field"><label for="f-gender">Gender</label><select id="f-gender"><option value="">—</option><option>Boy</option><option>Girl</option></select></div>
+          <div class="field">
+            <label for="f-dob">Date of birth</label>
+            <input id="f-dob" placeholder="dd-mm-yyyy" inputmode="numeric" maxlength="10"
+                   pattern="\d{1,2}-\d{1,2}-\d{4}" aria-describedby="f-dob-msg">
+            <div class="hint" id="f-dob-msg" role="status" style="margin:5px 0 0"></div>
+          </div>
+          <div class="field"><label for="f-age">Age (if D.O.B unknown)</label><input id="f-age" type="number" min="1" max="30" inputmode="numeric" placeholder="Years"></div>
+          <div class="field"><label for="f-contact">Contact</label><input id="f-contact" placeholder="07xx xxx xxx" inputmode="tel"></div>
+          <div class="field"><label for="f-school">School</label><input id="f-school" placeholder="School name"></div>
+          <div class="field"><label for="f-level">Level / class</label><input id="f-level" placeholder="e.g. Grade 6"></div>
+          <div class="field"><label for="f-location">Current location</label><input id="f-location" placeholder="Area"></div>
         </div>
         <div class="row">
           <button class="btn" id="btn-save">Save</button>
@@ -255,59 +289,81 @@
           <button data-g="Boy">Boys</button>
           <button data-g="Girl">Girls</button>
         </div>
-        <input id="f-search" placeholder="Search name, school or location" style="flex:1;min-width:180px">
+        <input id="f-search" placeholder="Search name, school or location" aria-label="Search members" style="flex:1;min-width:180px">
       </div>
       <div class="hint">Age fills itself in from the date of birth. Where there is no D.O.B, type the age in the box. School and location save as you type.</div>
       <div class="tbl-scroll" id="tbl-students"></div>
     </div>
 
-    <div class="view" id="v-offerings">
+    <div class="view" id="v-offerings" role="tabpanel" aria-labelledby="tab-offerings" tabindex="0">
       <div class="sec-hd">
         <h2 style="margin:0">Offerings</h2>
         <div class="row">
-          <div class="seg" id="oseg">
-            <button data-m="month" class="on">One month</button>
-            <button data-m="year">Whole year</button>
+          <div class="seg" id="oseg" role="group" aria-label="Offering breakdown">
+            <button data-m="sundays" class="on" aria-pressed="true">Sundays</button>
+            <button data-m="month" aria-pressed="false">Monthly</button>
+            <button data-m="year" aria-pressed="false">Yearly</button>
           </div>
-          <input type="month" id="o-month" style="width:auto">
-          <input type="number" id="o-year" min="2000" max="2100" style="width:100px;display:none">
+          <!-- month and year are now plain dropdowns, so a tap always opens a list -->
+          <div class="pickers" id="o-month-wrap">
+            <label class="sr-only" for="o-m">Offering month</label>
+            <select id="o-m"></select>
+            <label class="sr-only" for="o-my">Offering year</label>
+            <select id="o-my"></select>
+          </div>
+          <div class="pickers" id="o-year-wrap" style="display:none">
+            <label class="sr-only" for="o-year">Offering year</label>
+            <select id="o-year"></select>
+          </div>
         </div>
       </div>
       <div class="row" style="margin-bottom:12px">
-        <input id="o-search" placeholder="Search member" style="max-width:280px">
+        <input id="o-search" placeholder="Search member" aria-label="Search member" style="max-width:280px">
       </div>
 
-      <div id="mode-month">
-        <div class="hint">Enter each member's total offering in KSh. It saves automatically; totals use the selected currency.</div>
-        <div class="tbl-scroll" id="tbl-offerings"></div>
+      <div id="mode-sundays">
+        <div class="hint">Enter what each member gave on each Sunday, in KSh. It saves automatically. Monthly and yearly totals add these up — you never type them.</div>
+        <div class="tbl-scroll keepscroll" id="tbl-sundays"></div>
+      </div>
+
+      <div id="mode-month" style="display:none">
+        <div class="hint">Read-only month totals, built from the Sunday entries. Switch to Sundays to change an amount.</div>
+        <div class="tbl-scroll" id="tbl-month-summary"></div>
       </div>
 
       <div id="mode-year" style="display:none">
-        <div class="hint">Enter monthly offerings in KSh. Totals use the selected currency. Swipe sideways for the months — names stay pinned on the left.</div>
+        <div class="hint">Read-only year totals by month. Swipe sideways for the months — names stay pinned on the left.</div>
         <div class="tbl-scroll keepscroll" id="tbl-year"></div>
       </div>
     </div>
 
-    <div class="view" id="v-reports">
+    <div class="view" id="v-reports" role="tabpanel" aria-labelledby="tab-reports" tabindex="0">
       <div class="sec-hd">
         <h2 style="margin:0">Reports</h2>
         <button class="btn sec sm" id="btn-print">Print register</button>
       </div>
+      <div id="r-fx"></div>
       <div class="grid g3" style="margin-bottom:18px">
         <button type="button" class="card report-date-card" data-report-date><div class="lbl">Total raised in <span id="r-year-label">this year</span></div><div class="val gold" id="r-year">0</div></button>
         <div class="card"><div class="lbl">Total offering in <span id="r-month-label">selected month</span></div><div class="val" id="r-month-total">0</div></div>
-        <button type="button" class="card report-date-card" data-report-date><div class="lbl">Months recorded in <span id="r-months-year"></span></div><div class="val" id="r-months">0</div></button>
+        <button type="button" class="card report-date-card" data-report-date><div class="lbl">Sundays with giving in <span id="r-months-year"></span></div><div class="val" id="r-months">0</div></button>
       </div>
       <h2>Offerings by month</h2>
-      <div class="chartbox" style="height:250px"><canvas id="chart-month"></canvas></div>
+      <div class="chartbox" style="height:250px"><canvas id="chart-month" aria-label="Bar chart of offerings by month" role="img"></canvas></div>
       <h2 style="margin-top:24px">Top giving members</h2>
       <div id="r-top"></div>
     </div>
 
-    <dialog id="report-date-dialog">
+    <dialog id="report-date-dialog" aria-labelledby="report-date-title">
       <form id="report-date-form">
-        <h2>Choose report month and year</h2>
-        <div class="field"><label for="report-month">Month and year</label><input type="month" id="report-month" required></div>
+        <h2 id="report-date-title">Choose report month and year</h2>
+        <div class="field">
+          <label for="report-m">Month and year</label>
+          <div class="pickers">
+            <select id="report-m"></select>
+            <select id="report-y"></select>
+          </div>
+        </div>
         <div class="row">
           <button type="button" class="btn sec" id="report-date-cancel">Cancel</button>
           <button type="submit" class="btn">Show report</button>
@@ -315,7 +371,7 @@
       </form>
     </dialog>
 
-    <div class="view" id="v-data">
+    <div class="view" id="v-data" role="tabpanel" aria-labelledby="tab-data" tabindex="0">
       <h2>Backup &amp; restore</h2>
       <p class="muted" style="font-size:13px;margin:0 0 14px">Everything is saved in this browser. Download a backup so nothing is lost, and restore it on another device.</p>
       <div class="row" style="margin-bottom:22px">
@@ -325,7 +381,7 @@
       </div>
       <h2>Group name</h2>
       <div class="row" style="margin-bottom:22px">
-        <input id="f-org" placeholder="Boys and Girls Brigade 2026" style="max-width:320px">
+        <input id="f-org" placeholder="Boys and Girls Brigade 2026" aria-label="Group name" style="max-width:320px">
         <button class="btn sec sm" id="btn-org">Save</button>
       </div>
       <h2>Login passcode</h2>
@@ -355,11 +411,12 @@
       </form>
       <h2>Clear everything</h2>
       <button class="btn dng" id="btn-clear">Erase all data</button>
+      <div class="hint" style="margin-top:8px">Erasing removes every member and offering, then puts back the original roster from this file.</div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div id="printArea"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -524,20 +581,47 @@
     });
   };
   var uid = function(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); };
-  var thisMonth = function(){ return new Date().toISOString().slice(0, 7); };
-  var thisYear = function(){ return new Date().getFullYear(); };
+  var pad2 = function(n){ return ('0' + n).slice(-2); };
+  var today = function(){ return new Date(); };
+  var thisMonth = function(){ var d = today(); return d.getFullYear() + '-' + pad2(d.getMonth() + 1); };
+  var thisYear = function(){ return today().getFullYear(); };
   var mLabel = function(k){
     var p = k.split('-');
     return new Date(p[0], p[1] - 1, 1).toLocaleString(undefined, { month: 'short', year: 'numeric' });
   };
   var byName = function(a, b){ return a.name.localeCompare(b.name); };
 
+  /* ---------- date helpers ---------- */
+
+  function sundaysIn(y, m){
+    var yy = Number(y), mm = Number(m);
+    var out = [];
+    var d = new Date(yy, mm - 1, 1);
+    while (d.getMonth() === mm - 1){
+      if (d.getDay() === 0) out.push(yy + '-' + pad2(mm) + '-' + pad2(d.getDate()));
+      d.setDate(d.getDate() + 1);
+    }
+    return out;
+  }
+
+  function shortDate(date){
+    var p = date.split('-');
+    return Number(p[2]) + ' ' + MNAME[Number(p[1]) - 1];
+  }
+
+  function parseDob(dob){
+    var m = /^(\d{1,2})-(\d{1,2})-(\d{4})$/.exec(String(dob || '').trim());
+    if (!m) return null;
+    var d = Number(m[1]), mo = Number(m[2]), y = Number(m[3]);
+    if (mo < 1 || mo > 12 || d < 1 || d > 31) return null;
+    var dt = new Date(y, mo - 1, d);
+    if (dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+    return dt;
+  }
+
   function ageFromDob(dob){
-    if (!dob) return 0;
-    var p = String(dob).split('-');
-    if (p.length !== 3) return 0;
-    var d = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]));
-    if (isNaN(d.getTime())) return 0;
+    var d = parseDob(dob);
+    if (!d) return 0;
     var now = new Date();
     var a = now.getFullYear() - d.getFullYear();
     var m = now.getMonth() - d.getMonth();
@@ -562,6 +646,36 @@
     return list;
   }
 
+  /* ---------- schema: id|YYYY-MM-DD ---------- */
+
+  function migrateOfferings(){
+    var moved = 0;
+    Object.keys(db.offerings).forEach(function(k){
+      var parts = k.split('|');
+      var d = parts[1] || '';
+      if (!/^\d{4}-\d{2}$/.test(d)) return;
+      var suns = sundaysIn(d.slice(0, 4), d.slice(5, 7));
+      var target = suns.length ? suns[0] : d + '-01';
+      var nk = parts[0] + '|' + target;
+      db.offerings[nk] = (Number(db.offerings[nk]) || 0) + (Number(db.offerings[k]) || 0);
+      delete db.offerings[k];
+      moved++;
+    });
+    return moved;
+  }
+
+  function normalizeOfferings(src){
+    var out = {};
+    var changed = 0;
+    Object.keys(src || {}).forEach(function(k){
+      var raw = Number(src[k]) || 0;
+      var rounded = Math.round(raw / 5) * 5;
+      if (rounded >= 10){ out[k] = rounded; if (rounded !== raw) changed++; }
+      else changed++;
+    });
+    return { offerings: out, changed: changed };
+  }
+
   var db = null;
   try { db = JSON.parse(localStorage.getItem(KEY)); } catch (e) { db = null; }
   if (!db || !db.students || !db.students.length){
@@ -571,17 +685,17 @@
   if (!db.settings) db.settings = { currency: 'KSh', org: 'Boys and Girls Brigade 2026' };
   if (!db.settings.currency) db.settings.currency = 'KSh';
   db.students.forEach(function(s){ if (s.age === undefined) s.age = ''; });
-  Object.keys(db.offerings).forEach(function(k){
-    var amount = Math.round((Number(db.offerings[k]) || 0) / 5) * 5;
-    if (amount >= 10) db.offerings[k] = amount; else delete db.offerings[k];
-  });
+
+  var migratedCount = migrateOfferings();
+  if (migratedCount) save();
 
   var charts = {};
   var exchangeRates = null;
   var exchangeRateRequest = 0;
   var genderFilter = '';
-  var offerMode = 'month';
+  var offerMode = 'sundays';
   var reportMonth = thisMonth();
+  var lastDeleted = null;
 
   function save(){ localStorage.setItem(KEY, JSON.stringify(db)); }
   function cur(){ return db.settings.currency; }
@@ -603,37 +717,103 @@
       maximumFractionDigits: digits
     });
   }
+  function fxNote(){
+    if (currencyCode() === 'KES' || exchangeRates) return '';
+    return '<div class="fxn" role="note">Live exchange rates unavailable — amounts are shown in KSh until the rates load.</div>';
+  }
+
   var toastTimer;
-  function toast(msg){
+  function toast(msg, actionLabel, actionFn){
     var t = $('#toast');
-    t.textContent = msg;
+    t.innerHTML = '';
+    var span = document.createElement('span');
+    span.textContent = msg;
+    t.appendChild(span);
+    if (actionLabel && actionFn){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'toast-act';
+      b.textContent = actionLabel;
+      b.onclick = function(){
+        clearTimeout(toastTimer);
+        t.classList.remove('on');
+        actionFn();
+      };
+      t.appendChild(b);
+    }
     t.classList.add('on');
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function(){ t.classList.remove('on'); }, 1800);
+    toastTimer = setTimeout(function(){ t.classList.remove('on'); }, actionLabel ? 7000 : 1800);
+  }
+
+  /* ---------- month / year dropdowns ---------- */
+
+  function fillPickers(){
+    var yStart = thisYear() - 6;
+    var yEnd = Math.max(thisYear() + 9, 2035);
+    Object.keys(db.offerings).forEach(function(k){
+      var y = Number((k.split('|')[1] || '').slice(0, 4));
+      if (!y) return;
+      if (y < yStart) yStart = y;
+      if (y > yEnd) yEnd = y;
+    });
+
+    var yOpts = '';
+    for (var y = yStart; y <= yEnd; y++) yOpts += '<option value="' + y + '">' + y + '</option>';
+    $('#o-my').innerHTML = yOpts;
+    $('#o-year').innerHTML = yOpts;
+    $('#report-y').innerHTML = yOpts;
+
+    var mOpts = MONTHS.map(function(mm, i){ return '<option value="' + mm + '">' + MNAME[i] + '</option>'; }).join('');
+    $('#o-m').innerHTML = mOpts;
+    $('#report-m').innerHTML = mOpts;
+  }
+
+  function setPickers(mSel, ySel, key){
+    if (!key) return;
+    mSel.value = key.slice(5, 7);
+    ySel.value = key.slice(0, 4);
+  }
+
+  /* ---------- totals ---------- */
+
+  function dayValue(id, date){ return Number(db.offerings[id + '|' + date] || 0); }
+
+  function dayTotal(date){
+    var s = 0;
+    for (var k in db.offerings) if (k.slice(-10) === date) s += Number(db.offerings[k] || 0);
+    return s;
   }
 
   function monthTotal(m){
     var s = 0;
-    for (var k in db.offerings) if (k.slice(-8) === '|' + m) s += Number(db.offerings[k] || 0);
+    for (var k in db.offerings){ var d = k.slice(-10); if (d.slice(0, 7) === m) s += Number(db.offerings[k] || 0); }
     return s;
   }
 
   function yearTotal(y){
     var s = 0;
-    for (var k in db.offerings){
-      var m = k.split('|')[1];
-      if (m && m.indexOf(y) === 0) s += Number(db.offerings[k] || 0);
-    }
+    for (var k in db.offerings){ var d = k.slice(-10); if (d.slice(0, 4) === y) s += Number(db.offerings[k] || 0); }
     return s;
   }
+
+  function memberRange(id, prefix){
+    var p = id + '|' + prefix;
+    var s = 0;
+    for (var k in db.offerings) if (k.indexOf(p) === 0) s += Number(db.offerings[k] || 0);
+    return s;
+  }
+
+  function memberMonthTotal(id, m){ return memberRange(id, m); }
+  function memberYearTotal(id, y){ return memberRange(id, y + '-'); }
 
   function genderTag(g){
     if (!g) return '';
     return '<span class="tag ' + (g === 'Boy' ? 'b' : 'g') + '">' + esc(g) + '</span>';
   }
 
-  function setOffer(id, m, value){
-    var k = id + '|' + m;
+  function setOffer(id, date, value){
+    var k = id + '|' + date;
     var amount = Number(value) || 0;
     if (!Number.isInteger(amount) || (amount > 0 && amount % 5 !== 0)){
       toast('Offerings must be whole amounts in increments of 5');
@@ -647,18 +827,34 @@
     return true;
   }
 
+  var VIEW_LABEL = { dash: 'Dashboard', students: 'Members', offerings: 'Offerings', reports: 'Reports', data: 'Backup' };
+
   function openView(view){
     document.querySelectorAll('.nav button').forEach(function(b){
-      b.classList.toggle('on', b.dataset.v === view);
+      var on = b.dataset.v === view;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-selected', String(on));
     });
     document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
     $('#v-' + view).classList.add('on');
+    $('#live').textContent = VIEW_LABEL[view] + ' view';
     if (view === 'reports') renderReports();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   document.querySelectorAll('.nav button').forEach(function(b){
     b.onclick = function(){ openView(b.dataset.v); };
+  });
+
+  $('.nav').addEventListener('keydown', function(e){
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.nav button'));
+    var i = tabs.indexOf(document.activeElement);
+    if (i < 0) return;
+    e.preventDefault();
+    var next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    next.focus();
+    next.click();
   });
 
   document.querySelectorAll('.dashboard-card').forEach(function(card){
@@ -688,15 +884,14 @@
 
   document.querySelectorAll('[data-report-date]').forEach(function(card){
     card.onclick = function(){
-      $('#report-month').value = reportMonth;
+      setPickers($('#report-m'), $('#report-y'), reportMonth);
       $('#report-date-dialog').showModal();
     };
   });
   $('#report-date-cancel').onclick = function(){ $('#report-date-dialog').close(); };
   $('#report-date-form').onsubmit = function(e){
     e.preventDefault();
-    if (!$('#report-month').value) return;
-    reportMonth = $('#report-month').value;
+    reportMonth = $('#report-y').value + '-' + $('#report-m').value;
     $('#report-date-dialog').close();
     renderReports();
   };
@@ -710,25 +905,27 @@
     renderMembers();
   };
 
+  /* ---------- offering mode switch ---------- */
+
+  function showMode(mode){
+    offerMode = mode;
+    document.querySelectorAll('#oseg button').forEach(function(b){
+      var on = b.dataset.m === mode;
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    $('#mode-sundays').style.display = mode === 'sundays' ? 'block' : 'none';
+    $('#mode-month').style.display = mode === 'month' ? 'block' : 'none';
+    $('#mode-year').style.display = mode === 'year' ? 'block' : 'none';
+    $('#o-month-wrap').style.display = mode === 'year' ? 'none' : 'flex';
+    $('#o-year-wrap').style.display = mode === 'year' ? 'flex' : 'none';
+    renderOfferings();
+  }
+
   $('#oseg').onclick = function(e){
     var b = e.target.closest('button');
     if (!b) return;
-    document.querySelectorAll('#oseg button').forEach(function(x){ x.classList.remove('on'); });
-    b.classList.add('on');
-    offerMode = b.dataset.m;
-    if (offerMode === 'year'){
-      $('#mode-month').style.display = 'none';
-      $('#mode-year').style.display = 'block';
-      $('#o-month').style.display = 'none';
-      $('#o-year').style.display = 'block';
-      renderYear();
-    } else {
-      $('#mode-month').style.display = 'block';
-      $('#mode-year').style.display = 'none';
-      $('#o-month').style.display = 'block';
-      $('#o-year').style.display = 'none';
-      renderOfferings();
-    }
+    showMode(b.dataset.m);
   };
 
   function renderDash(){
@@ -762,27 +959,32 @@
 
     var body = rows.map(function(s){
       var age = ageOf(s);
-      var ageCell = s.dob
+      var dobOk = parseDob(s.dob);
+      var dobCell = s.dob && !dobOk
+        ? '<span class="baddate" title="Use dd-mm-yyyy">' + esc(s.dob) + '<small>not a date</small></span>'
+        : esc(s.dob || '—');
+      var ageCell = (s.dob && dobOk)
         ? '<span class="agepill">' + (age || '—') + '</span>'
-        : '<input class="cell ag" type="number" min="1" max="30" data-id="' + s.id + '" data-f="age" value="' + esc(s.age) + '" placeholder="—">';
+        : '<input class="cell ag" type="number" min="1" max="30" inputmode="numeric" aria-label="Age for ' + esc(s.name) + '" data-id="' + s.id + '" data-f="age" value="' + esc(s.age) + '" placeholder="—">';
 
       return '<tr>' +
         '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
-        '<td data-l="D.O.B" class="muted">' + esc(s.dob || '—') + '</td>' +
+        '<td data-l="D.O.B" class="muted">' + dobCell + '</td>' +
         '<td data-l="Age">' + ageCell + '</td>' +
         '<td data-l="Contact" class="muted">' + esc(s.contact || '—') + '</td>' +
-        '<td data-l="School"><input class="cell" data-id="' + s.id + '" data-f="school" value="' + esc(s.school) + '" placeholder="Add school"></td>' +
-        '<td data-l="Level"><input class="cell lv" data-id="' + s.id + '" data-f="level" value="' + esc(s.level) + '" placeholder="Level"></td>' +
-        '<td data-l="Location"><input class="cell" data-id="' + s.id + '" data-f="location" value="' + esc(s.location) + '" placeholder="Add location"></td>' +
+        '<td data-l="School"><input class="cell" data-id="' + s.id + '" data-f="school" value="' + esc(s.school) + '" placeholder="Add school" aria-label="School for ' + esc(s.name) + '"></td>' +
+        '<td data-l="Level"><input class="cell lv" data-id="' + s.id + '" data-f="level" value="' + esc(s.level) + '" placeholder="Level" aria-label="Level for ' + esc(s.name) + '"></td>' +
+        '<td data-l="Location"><input class="cell" data-id="' + s.id + '" data-f="location" value="' + esc(s.location) + '" placeholder="Add location" aria-label="Location for ' + esc(s.name) + '"></td>' +
         '<td class="actcell"><button class="btn sec sm" data-ed="' + s.id + '">Edit</button> <button class="btn dng sm" data-del="' + s.id + '">Del</button></td>' +
       '</tr>';
     }).join('');
 
     $('#tbl-students').innerHTML =
-      '<table class="rt"><thead><tr><th>Name</th><th>D.O.B</th><th>Age</th><th>Contact</th><th>School</th><th>Level</th><th>Current location</th><th></th></tr></thead><tbody>' +
+      '<table class="rt"><caption class="sr-only">Member register</caption>' +
+      '<thead><tr><th>Name</th><th>D.O.B</th><th>Age</th><th>Contact</th><th>School</th><th>Level</th><th>Current location</th><th></th></tr></thead><tbody>' +
       body + '</tbody></table>';
 
-    document.querySelectorAll('.cell').forEach(function(inp){
+    document.querySelectorAll('#tbl-students .cell').forEach(function(inp){
       inp.onchange = function(){
         var s = db.students.find(function(x){ return x.id === inp.dataset.id; });
         if (!s) return;
@@ -800,13 +1002,24 @@
     document.querySelectorAll('[data-del]').forEach(function(b){
       b.onclick = function(){
         var s = db.students.find(function(x){ return x.id === b.dataset.del; });
-        if (confirm('Remove ' + s.name + '?')){
-          db.students = db.students.filter(function(x){ return x.id !== s.id; });
-          for (var k in db.offerings) if (k.indexOf(s.id + '|') === 0) delete db.offerings[k];
+        if (!s) return;
+        var savedOfferings = {};
+        for (var k in db.offerings) if (k.indexOf(s.id + '|') === 0) savedOfferings[k] = db.offerings[k];
+        lastDeleted = { student: s, offerings: savedOfferings };
+
+        db.students = db.students.filter(function(x){ return x.id !== s.id; });
+        for (var k2 in db.offerings) if (k2.indexOf(s.id + '|') === 0) delete db.offerings[k2];
+        save();
+        renderAll();
+        toast('Removed ' + s.name, 'Undo', function(){
+          if (!lastDeleted) return;
+          db.students.push(lastDeleted.student);
+          for (var k3 in lastDeleted.offerings) db.offerings[k3] = lastDeleted.offerings[k3];
+          lastDeleted = null;
           save();
           renderAll();
-          toast('Removed');
-        }
+          toast('Restored');
+        });
       };
     });
   }
@@ -819,6 +1032,7 @@
     ['name', 'gender', 'dob', 'age', 'contact', 'school', 'level', 'location'].forEach(function(f){
       $('#f-' + f).value = s ? (s[f] || '') : '';
     });
+    $('#f-dob-msg').textContent = '';
     $('#f-name').focus();
     $('#form-panel').scrollIntoView({ block: 'nearest' });
   }
@@ -826,14 +1040,36 @@
   $('#btn-add').onclick = function(){ openForm(); };
   $('#btn-cancel').onclick = function(){ $('#form-panel').style.display = 'none'; };
 
+  $('#f-dob').oninput = function(){
+    var v = $('#f-dob').value.trim();
+    var msg = $('#f-dob-msg');
+    if (!v){ msg.textContent = ''; return; }
+    msg.textContent = parseDob(v) ? '' : 'Use dd-mm-yyyy, e.g. 09-11-2011';
+  };
+
   $('#btn-save').onclick = function(){
     var name = $('#f-name').value.trim();
     if (!name){ toast('Name is required'); $('#f-name').focus(); return; }
+
+    var dob = $('#f-dob').value.trim();
+    if (dob && !parseDob(dob)){
+      toast('Date of birth must be dd-mm-yyyy');
+      $('#f-dob-msg').textContent = 'Use dd-mm-yyyy, e.g. 09-11-2011';
+      $('#f-dob').focus();
+      return;
+    }
+    var typedAge = $('#f-age').value.trim();
+    if (typedAge && (Number(typedAge) < 1 || Number(typedAge) > 30)){
+      toast('Age must be between 1 and 30');
+      $('#f-age').focus();
+      return;
+    }
+
     var data = {
       name: name,
       gender: $('#f-gender').value,
-      dob: $('#f-dob').value.trim(),
-      age: $('#f-age').value.trim(),
+      dob: dob,
+      age: dob ? '' : typedAge,
       contact: $('#f-contact').value.trim(),
       school: $('#f-school').value.trim(),
       level: $('#f-level').value.trim(),
@@ -856,55 +1092,118 @@
 
   $('#f-search').oninput = renderMembers;
 
+  /* ---------- offerings ---------- */
+
+  function currentMonthKey(){
+    return ($('#o-my').value || String(thisYear())) + '-' + ($('#o-m').value || thisMonth().slice(5, 7));
+  }
+
   function renderOfferings(){
-    var m = $('#o-month').value || thisMonth();
-    $('#o-month').value = m;
+    if (offerMode === 'sundays') return renderSundays();
+    if (offerMode === 'month') return renderMonthSummary();
+    return renderYearSummary();
+  }
+
+  function visibleRows(){
     var q = ($('#o-search').value || '').toLowerCase();
-    var rows = db.students.filter(function(s){ return !q || s.name.toLowerCase().indexOf(q) > -1; }).sort(byName);
+    return db.students.filter(function(s){ return !q || s.name.toLowerCase().indexOf(q) > -1; }).sort(byName);
+  }
+
+  function renderSundays(){
+    var m = currentMonthKey();
+    var suns = sundaysIn(m.slice(0, 4), m.slice(5, 7));
+    var rows = visibleRows();
 
     if (!rows.length){
-      $('#tbl-offerings').innerHTML = '<div class="empty">No members found</div>';
+      $('#tbl-sundays').innerHTML = '<div class="empty">No members found</div>';
       return;
     }
 
-    var total = 0;
+    var colTotals = suns.map(function(){ return 0; });
+    var grand = 0;
+
     var body = rows.map(function(s){
-      var v = Number(db.offerings[s.id + '|' + m] || 0);
-      total += v;
+      var rowTotal = 0;
+      var cells = suns.map(function(date, i){
+        var v = dayValue(s.id, date);
+        rowTotal += v;
+        colTotals[i] += v;
+        return '<td class="wkcell"><input class="amt" type="number" min="10" step="5" inputmode="numeric" value="' + (v || '') +
+          '" data-off="' + s.id + '" data-d="' + date + '" placeholder="—" aria-label="' + shortDate(date) + ' offering for ' + esc(s.name) + '"></td>';
+      }).join('');
+      grand += rowTotal;
       return '<tr>' +
-        '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
-        '<td data-l="School" class="muted">' + esc(s.school || '—') + '</td>' +
-        '<td data-l="Offering"><div class="row" style="gap:6px;flex-wrap:nowrap;width:100%">KSh' +
-          '<input class="amt" type="number" min="10" step="5" value="' + (v || '') + '" data-off="' + s.id + '" placeholder="10">' +
-        '</div></td>' +
+        '<td class="name"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
+        cells +
+        '<td class="rowtotal">' + (rowTotal ? money(rowTotal) : '—') + '</td>' +
       '</tr>';
     }).join('');
 
-    $('#tbl-offerings').innerHTML =
-      '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + mLabel(m) + '</b> &middot; total collected: <b style="color:#b45309">' + money(total) + '</b></div>' +
-      '<table class="rt"><thead><tr><th>Member</th><th>School</th><th>Offering (KSh)</th></tr></thead><tbody>' +
-        body +
-        '<tr class="tot-row"><td colspan="3">Total for ' + mLabel(m) + ': ' + money(total) + '</td></tr>' +
-      '</tbody></table>';
+    var foot = suns.map(function(date, i){
+      return '<td class="mtot">' + (colTotals[i] ? money(colTotals[i]) : '—') + '</td>';
+    }).join('');
 
-    document.querySelectorAll('[data-off]').forEach(function(inp){
+    var heads = suns.map(function(date){
+      return '<th class="wkcol"><b>' + shortDate(date) + '</b><span>Sun</span></th>';
+    }).join('');
+
+    $('#tbl-sundays').innerHTML =
+      fxNote() +
+      '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + mLabel(m) + '</b> &middot; ' +
+        suns.length + ' Sunday' + (suns.length === 1 ? '' : 's') + ' &middot; month total: <b style="color:#b45309">' + money(grand) + '</b></div>' +
+      '<table class="wk"><caption class="sr-only">Sunday offerings for ' + mLabel(m) + '</caption>' +
+      '<thead><tr><th class="name">Member</th>' + heads + '<th>Month</th></tr></thead>' +
+      '<tbody>' + body + '</tbody>' +
+      '<tfoot><tr class="tot-row"><td class="name">All members</td>' + foot + '<td class="mtot">' + money(grand) + '</td></tr></tfoot></table>';
+
+    document.querySelectorAll('#tbl-sundays input').forEach(function(inp){
       inp.onchange = function(){
-        if (!setOffer(inp.dataset.off, m, inp.value)){
-          renderOfferings();
+        if (!setOffer(inp.dataset.off, inp.dataset.d, inp.value)){
+          renderSundays();
           return;
         }
         save();
-        renderOfferings();
+        renderSundays();
         renderDash();
       };
     });
   }
 
-  function renderYear(){
+  function renderMonthSummary(){
+    var m = currentMonthKey();
+    var suns = sundaysIn(m.slice(0, 4), m.slice(5, 7));
+    var rows = visibleRows();
+
+    if (!rows.length){
+      $('#tbl-month-summary').innerHTML = '<div class="empty">No members found</div>';
+      return;
+    }
+
+    var grand = 0;
+    var body = rows.map(function(s){
+      var total = memberMonthTotal(s.id, m);
+      grand += total;
+      var weeksWithGiving = suns.filter(function(d){ return dayValue(s.id, d) > 0; }).length;
+      return '<tr>' +
+        '<td class="namecell"><div class="nm">' + esc(s.name) + '</div>' + genderTag(s.gender) + '</td>' +
+        '<td data-l="Sundays given" class="muted">' + (weeksWithGiving ? weeksWithGiving + ' of ' + suns.length : '—') + '</td>' +
+        '<td data-l="Month total" class="num">' + (total ? money(total) : '—') + '</td>' +
+      '</tr>';
+    }).join('');
+
+    $('#tbl-month-summary').innerHTML =
+      fxNote() +
+      '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + mLabel(m) + '</b> &middot; month total: <b style="color:#b45309">' + money(grand) + '</b></div>' +
+      '<table class="rt"><caption class="sr-only">Monthly offering totals for ' + mLabel(m) + '</caption>' +
+      '<thead><tr><th>Member</th><th>Sundays given</th><th style="text-align:right">Month total</th></tr></thead><tbody>' +
+      body +
+      '<tr class="tot-row"><td colspan="3">Total for ' + mLabel(m) + ': ' + money(grand) + '</td></tr>' +
+      '</tbody></table>';
+  }
+
+  function renderYearSummary(){
     var y = String($('#o-year').value || thisYear());
-    $('#o-year').value = y;
-    var q = ($('#o-search').value || '').toLowerCase();
-    var rows = db.students.filter(function(s){ return !q || s.name.toLowerCase().indexOf(q) > -1; }).sort(byName);
+    var rows = visibleRows();
 
     if (!rows.length){
       $('#tbl-year').innerHTML = '<div class="empty">No members found</div>';
@@ -917,10 +1216,10 @@
     var body = rows.map(function(s){
       var rowTotal = 0;
       var cells = MONTHS.map(function(mm, i){
-        var v = Number(db.offerings[s.id + '|' + y + '-' + mm] || 0);
+        var v = memberMonthTotal(s.id, y + '-' + mm);
         rowTotal += v;
         colTotals[i] += v;
-        return '<td><input type="number" min="10" step="5" value="' + (v || '') + '" data-y="' + y + '" data-m="' + mm + '" data-id="' + s.id + '" placeholder="10"></td>';
+        return '<td>' + (v ? money(v) : '—') + '</td>';
       }).join('');
       grand += rowTotal;
       return '<tr>' +
@@ -930,57 +1229,49 @@
       '</tr>';
     }).join('');
 
-    var foot = MONTHS.map(function(mm, i){
-      return '<td class="mtot">' + (colTotals[i] ? money(colTotals[i]) : '—') + '</td>';
-    }).join('');
+    var foot = colTotals.map(function(t){ return '<td class="mtot">' + (t ? money(t) : '—') + '</td>'; }).join('');
 
     $('#tbl-year').innerHTML =
+      fxNote() +
       '<div style="padding:12px 14px;font-size:13px;background:#fbfbfc;border-bottom:1px solid #eef0f3"><b>' + y + '</b> &middot; year total: <b style="color:#b45309">' + money(grand) + '</b></div>' +
-      '<table class="yt"><thead><tr><th class="name">Member</th>' +
-      MNAME.map(function(n){ return '<th>' + n + '</th>'; }).join('') +
+      '<table class="yt"><caption class="sr-only">Offerings by month for ' + y + '</caption>' +
+      '<thead><tr><th class="name">Member</th>' + MNAME.map(function(n){ return '<th>' + n + '</th>'; }).join('') +
       '<th>Total (' + displayCurrencyCode() + ')</th></tr></thead><tbody>' + body + '</tbody>' +
       '<tfoot><tr class="tot-row"><td class="name">All members</td>' + foot + '<td class="mtot">' + money(grand) + '</td></tr></tfoot></table>';
-
-    document.querySelectorAll('#tbl-year input').forEach(function(inp){
-      inp.onchange = function(){
-        if (!setOffer(inp.dataset.id, inp.dataset.y + '-' + inp.dataset.m, inp.value)){
-          renderYear();
-          return;
-        }
-        save();
-        renderYear();
-        renderDash();
-      };
-    });
   }
 
-  $('#o-month').onchange = renderOfferings;
-  $('#o-year').onchange = renderYear;
-  $('#o-search').oninput = function(){
-    if (offerMode === 'year') renderYear(); else renderOfferings();
-  };
+  $('#o-m').onchange = renderOfferings;
+  $('#o-my').onchange = renderOfferings;
+  $('#o-year').onchange = renderYearSummary;
+  $('#o-search').oninput = renderOfferings;
+
+  /* ---------- reports ---------- */
 
   function renderReports(){
     var y = reportMonth.slice(0, 4);
+    $('#r-fx').innerHTML = fxNote();
     $('#r-year-label').textContent = y;
     $('#r-months-year').textContent = y;
     $('#r-year').textContent = money(yearTotal(y));
     $('#r-month-label').textContent = mLabel(reportMonth);
 
     var months = {};
+    var sundayCount = 0;
     for (var k in db.offerings){
-      var m = k.split('|')[1];
-      if (m && m.indexOf(y + '-') === 0) months[m] = (months[m] || 0) + Number(db.offerings[k] || 0);
+      var d = k.split('|')[1] || '';
+      if (d.slice(0, 4) !== y) continue;
+      months[d.slice(0, 7)] = (months[d.slice(0, 7)] || 0) + Number(db.offerings[k] || 0);
+      sundayCount++;
     }
     var keys = Object.keys(months).sort();
-    $('#r-months').textContent = keys.length;
+    $('#r-months').textContent = sundayCount;
 
     $('#r-month-total').textContent = money(monthTotal(reportMonth));
 
     var per = {};
     for (var j in db.offerings){
       var parts = j.split('|');
-      if (parts[1] && parts[1].indexOf(y + '-') === 0){
+      if ((parts[1] || '').slice(0, 4) === y){
         per[parts[0]] = (per[parts[0]] || 0) + Number(db.offerings[j] || 0);
       }
     }
@@ -989,13 +1280,17 @@
     }).filter(function(x){ return x[0]; }).sort(function(a, b){ return b[1] - a[1]; }).slice(0, 10);
 
     if (top.length){
-      $('#r-top').innerHTML = '<div class="tbl-scroll"><table class="rt"><thead><tr><th>#</th><th>Member</th><th>Age</th><th>School</th><th style="text-align:right">Total given</th></tr></thead><tbody>' +
+      $('#r-top').innerHTML = '<div class="tbl-scroll"><table class="rt"><caption class="sr-only">Top giving members for ' + y + '</caption>' +
+        '<thead><tr><th>#</th><th>Member</th><th>Age</th><th>School</th><th style="text-align:right">Total given</th></tr></thead><tbody>' +
         top.map(function(t, i){
           var a = ageOf(t[0]);
-          return '<tr><td class="namecell"><div class="nm">' + (i + 1) + '. ' + esc(t[0].name) + '</div></td>' +
+          return '<tr>' +
+            '<td class="rankcell" data-l="Rank">' + (i + 1) + '</td>' +
+            '<td class="namecell"><div class="nm">' + esc(t[0].name) + '</div></td>' +
             '<td data-l="Age" class="muted">' + (a || '—') + '</td>' +
             '<td data-l="School" class="muted">' + esc(t[0].school || '—') + '</td>' +
-            '<td data-l="Total given" style="text-align:right">' + money(t[1]) + '</td></tr>';
+            '<td data-l="Total given" class="num">' + money(t[1]) + '</td>' +
+          '</tr>';
         }).join('') + '</tbody></table></div>';
     } else {
       $('#r-top').innerHTML = '<div class="empty">No offerings recorded yet</div>';
@@ -1040,7 +1335,8 @@
     var blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'brigade-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+    var d = today();
+    a.download = 'brigade-backup-' + d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) + '.json';
     a.click();
     toast('Backup downloaded');
   };
@@ -1049,6 +1345,7 @@
 
   $('#file-import').onchange = function(e){
     var f = e.target.files[0];
+    e.target.value = '';
     if (!f) return;
     var r = new FileReader();
     r.onload = function(){
@@ -1056,12 +1353,19 @@
         var d = JSON.parse(r.result);
         if (!d.students) throw 0;
         db = d;
-        if (!db.offerings) db.offerings = {};
         if (!db.settings) db.settings = { currency: 'KSh', org: 'Boys and Girls Brigade 2026' };
         db.students.forEach(function(s){ if (s.age === undefined) s.age = ''; });
+
+        var moved = migrateOfferings();
+        var norm = normalizeOfferings(db.offerings);
+        db.offerings = norm.offerings;
+
         save();
         initUI();
-        toast('Restored');
+        var bits = [];
+        if (moved) bits.push(moved + ' monthly record' + (moved === 1 ? '' : 's') + ' moved to Sundays');
+        if (norm.changed) bits.push(norm.changed + ' amount' + (norm.changed === 1 ? '' : 's') + ' rounded to steps of 5');
+        toast(bits.length ? 'Restored — ' + bits.join(', ') : 'Restored');
       } catch (x) { toast('Invalid backup'); }
     };
     r.readAsText(f);
@@ -1075,7 +1379,7 @@
   };
 
   $('#btn-clear').onclick = function(){
-    if (confirm('Erase all members and offerings?')){
+    if (confirm('Erase all members and offerings? The original roster will be put back.')){
       var settings = { currency: db.settings.currency, org: db.settings.org };
       db = { students: buildSeed(), offerings: {}, settings: settings };
       save();
@@ -1084,10 +1388,31 @@
     }
   };
 
+  function fieldKey(el){
+    if (!el || !el.dataset) return null;
+    if (el.dataset.off && el.dataset.d) return 'off:' + el.dataset.off + ':' + el.dataset.d;
+    if (el.dataset.f && el.dataset.id) return 'f:' + el.dataset.id + ':' + el.dataset.f;
+    return null;
+  }
+  function refocus(key){
+    if (!key) return;
+    var p = key.split(':');
+    var sel = p[0] === 'off' ? '#tbl-sundays input[data-off="' + p[1] + '"][data-d="' + p[2] + '"]'
+      : '#tbl-students .cell[data-id="' + p[1] + '"][data-f="' + p[2] + '"]';
+    var el = document.querySelector(sel);
+    if (el && el.focus) el.focus();
+  }
+
   $('#currency').onchange = function(){
+    var el = document.activeElement;
+    var key = fieldKey(el);
+    if (key && el.onchange) el.onchange();
+
     db.settings.currency = $('#currency').value;
     save();
     renderAll();
+    refocus(key);
+
     if (currencyCode() === 'KES'){
       exchangeRateRequest++;
       $('#currency-status').textContent = '';
@@ -1103,10 +1428,17 @@
     $('#org').textContent = db.settings.org || 'Boys and Girls Brigade 2026';
     $('#f-org').value = db.settings.org || 'Boys and Girls Brigade 2026';
     $('#currency').value = db.settings.currency || 'KSh';
-    $('#o-month').value = thisMonth();
+    fillPickers();
+    setPickers($('#o-m'), $('#o-my'), thisMonth());
+    setPickers($('#report-m'), $('#report-y'), reportMonth);
     $('#o-year').value = thisYear();
+    showMode(offerMode);
     renderAll();
     if (currencyCode() !== 'KES') loadExchangeRates();
+    if (migratedCount){
+      toast(migratedCount + ' monthly record' + (migratedCount === 1 ? '' : 's') + ' moved onto the first Sunday — split them across the weeks');
+      migratedCount = 0;
+    }
   }
 
   function loadExchangeRates(){
@@ -1153,7 +1485,6 @@
     renderDash();
     renderMembers();
     renderOfferings();
-    if (offerMode === 'year') renderYear();
     if ($('#v-reports').classList.contains('on')) renderReports();
   }
 
